@@ -1,0 +1,14 @@
+{
+  "name": "new_pp_site",
+  "version": "1.0.0",
+  "description": "diyar faraj official",
+  "main": "index.js",
+  "scripts": {
+    "sass": "node-sass -w scss/ -o dist/css --recursive"
+  },
+  "author": "Diyar Faraj",
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^7.0.1"
+  }
+}
