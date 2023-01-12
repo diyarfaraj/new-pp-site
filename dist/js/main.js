@@ -40,11 +40,12 @@ var Messenger = function (el) {
     m.current_length = 0;
     m.fadeBuffer = false;
     m.messages = [
-      "Developer",
-      "Web/Desktop/Mobile",
+      "Software Engineer",
       "C#/.NET",
-      "JavaScript/React",
+      "React/Vue",
       "Flutter/Xamarin",
+      "Azure/AWS",
+      "Web/Desktop/Mobile",
     ];
 
     setTimeout(m.animateIn, 100);
