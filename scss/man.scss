@@ -7,7 +7,6 @@
 }
 
 body {
-  
   background: black;
   color: set-text-color($primary-color);
   height: 100%;
@@ -86,7 +85,7 @@ main {
     }
   }
   &#about {
-    overflow: hidden;
+    overflow: auto;
     h1 {
       margin-top: -5vh;
     }
