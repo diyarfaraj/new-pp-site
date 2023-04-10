@@ -338,11 +338,11 @@ main .icons a:hover {
 }
 
 main#home {
-  overflow: hidden;
+  overflow: auto;
 }
 
 main#home h1 {
-  margin-top: 20vh;
+  margin-top: 5vh;
 }
 
 main#about {
@@ -621,3 +621,14 @@ label {
   background-color: red;
 }
 /*# sourceMappingURL=man.css.map */
+
+#home {
+  overflow-y: scroll;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+/* For Chrome, Safari, and Opera */
+#home::-webkit-scrollbar {
+  display: none;
+}

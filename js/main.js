@@ -4,7 +4,7 @@ const menu = document.querySelector(".menu");
 const menuNav = document.querySelector(".menu-nav");
 const menuBranding = document.querySelector(".menu-branding");
 const navItems = document.querySelectorAll(".nav-item");
-const chatBottom = document.querySelector(".chatbase-bubble-button");
+const chatBottom = document.querySelector(".text-center");
 
 // set initial state of menu
 let showMenu = false;
@@ -132,5 +132,4 @@ var Messenger = function (el) {
   m.init();
 };
 
-console.clear();
 var messenger = new Messenger($("#messenger"));
