@@ -45,8 +45,8 @@ var Messenger = function (el) {
       "Software Engineer",
       "C#/.NET",
       "React/Vue",
-      "Flutter/Xamarin",
-      "Azure/AWS",
+      "Flutter",
+      "Azure",
       "Web/Desktop/Mobile",
     ];
 
