@@ -57,7 +57,8 @@ var Messenger = function (el) {
     $(el).css({
       'color': '#0f0',
       'text-shadow': '0 0 5px #0f0, 0 0 10px #0f0',
-      'font-family': 'monospace, consolas, courier new'
+      'font-family': 'monospace, consolas, courier new',
+      'font-size': '10px'
     });
     
     // Create background element for matrix effect
@@ -212,7 +213,7 @@ function createMatrixRain() {
     column.style.position = 'absolute';
     column.style.top = '0';
     column.style.color = '#0f0';
-    column.style.fontSize = '16px';
+    column.style.fontSize = '4px';
     column.style.textShadow = '0 0 5px #0f0';
     column.style.opacity = (0.1 + Math.random() * 0.5);
     
