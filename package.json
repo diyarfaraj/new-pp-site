@@ -5,14 +5,20 @@
   "main": "index.js",
   "homepage": "https://diyarfaraj.github.io/new-pp-site",
   "scripts": {
-    "sass": "sass --watch scss:dist/css",
-    "sass:build": "sass scss/man.scss dist/css/main.css",
-    "deploy": "gh-pages -d dist"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "author": "Diyar Faraj",
   "license": "ISC",
   "dependencies": {
     "gh-pages": "^6.3.0",
     "sass": "^1.93.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
   }
 }
