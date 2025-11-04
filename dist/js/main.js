@@ -1,50 +1,50 @@
-// Select DOM items
-//const menuBtn = document.querySelector(".menu-btn");
-const menu = document.querySelector(".menu");
-const menuNav = document.querySelector(".menu-nav");
-const menuBranding = document.querySelector(".menu-branding");
-const navItems = document.querySelectorAll(".nav-item");
-const chatBottom = document.querySelector(".text-center");
+/**
+ * Portfolio Website - Main JavaScript
+ * Diyar Faraj - Software Engineer
+ *
+ * Features:
+ * - Matrix-style messenger animation with cycling text
+ * - Falling matrix rain background effect
+ * - First name glitch/flicker effect
+ *
+ * No dependencies - Pure Vanilla JavaScript
+ */
 
-// set initial state of menu
-let showMenu = false;
-console.log(chatBottom);
+// ======================
+// MESSENGER ANIMATION
+// ======================
 
-//menuBtn.addEventListener("click", toggleMenu);
-
-function toggleMenu() {
-  if (!showMenu) {
-    //menuBtn.classList.add("close");
-    menu.classList.add("show");
-    menuNav.classList.add("show");
-    menuBranding.classList.add("show");
-    navItems.forEach((item) => item.classList.add("show"));
-
-    showMenu = true;
-  } else {
-    //menuBtn.classList.remove("close");
-    menu.classList.remove("show");
-    menuNav.classList.remove("show");
-    menuBranding.classList.remove("show");
-    navItems.forEach((item) => item.classList.remove("show"));
-
-    showMenu = false;
+/**
+ * Messenger class - Creates Matrix-style typing animation
+ * Cycles through messages with random character effects
+ */
+class Messenger {
+  constructor(el) {
+    this.el = el;
+    this.init();
   }
-}
 
-var Messenger = function (el) {
-  "use strict";
-  var m = this;
+  /**
+   * Initialize the messenger with configuration and styling
+   */
+  init() {
+    // Matrix-like character set including Japanese-inspired symbols
+    this.codeletters = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ01010101";
 
-  m.init = function () {
-    // More Matrix-like characters including Japanese-inspired symbols
-    m.codeletters = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ01010101";
-    m.message = 0;
-    m.current_length = 0;
-    m.fadeBuffer = false;
-    m.glitchInterval = null;
-    m.trailChars = [];
-    m.messages = [
+    // Current message index
+    this.message = 0;
+
+    // Current character length being animated
+    this.current_length = 0;
+
+    // Buffer for fade-in effect
+    this.fadeBuffer = false;
+
+    // Interval for glitch effect
+    this.glitchInterval = null;
+
+    // Messages to cycle through
+    this.messages = [
       "Software Engineer",
       "C#/.NET, React, Vue, Flutter",
       "DevOps",
@@ -53,109 +53,132 @@ var Messenger = function (el) {
       "Azure",
     ];
 
-    // Add matrix styling with CSS
-    $(el).css({
-      'color': '#0f0',
-      'text-shadow': '0 0 5px #0f0, 0 0 10px #0f0',
-      'font-family': 'monospace, consolas, courier new',
-      'font-size': '10px'
-    });
-    
-    // Create background element for matrix effect
-    $('body').append('<div id="matrix-bg"></div>');
-    $('#matrix-bg').css({
-      'position': 'fixed',
-      'top': 0,
-      'left': 0,
-      'right': 0,
-      'bottom': 0,
-      'pointer-events': 'none',
-      'z-index': -1,
-      'opacity': 0.1
-    });
-    
-    // Start the glitch effect
-    m.startGlitchEffect();
-    
-    setTimeout(m.animateIn, 100);
-  };
+    // Apply Matrix-style CSS
+    this.el.style.color = '#0f0';
+    this.el.style.textShadow = '0 0 5px #0f0, 0 0 10px #0f0';
+    this.el.style.fontFamily = 'monospace, consolas, courier new';
+    this.el.style.fontSize = '10px';
+    this.el.style.position = 'static';
+    this.el.style.transform = 'none';
+    this.el.style.textAlign = 'left';
 
-  m.startGlitchEffect = function() {
-    // Occasionally glitch the text
-    m.glitchInterval = setInterval(function() {
+    // Create background element for matrix effect
+    this.createMatrixBackground();
+
+    // Start the glitch effect
+    this.startGlitchEffect();
+
+    // Start animation
+    setTimeout(() => this.animateIn(), 100);
+  }
+
+  /**
+   * Creates background container for matrix rain effect
+   */
+  createMatrixBackground() {
+    const matrixBg = document.createElement('div');
+    matrixBg.id = 'matrix-bg';
+    Object.assign(matrixBg.style, {
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0',
+      pointerEvents: 'none',
+      zIndex: '-1',
+      opacity: '0.1'
+    });
+    document.body.appendChild(matrixBg);
+  }
+
+  /**
+   * Starts random glitch effect on text
+   */
+  startGlitchEffect() {
+    this.glitchInterval = setInterval(() => {
       if (Math.random() < 0.1) {
-        let originalText = $(el).html();
-        let glitchText = originalText.split('').map(char => {
-          return Math.random() < 0.3 ? m.codeletters.charAt(Math.floor(Math.random() * m.codeletters.length)) : char;
-        }).join('');
-        
-        $(el).html(glitchText);
-        
+        const originalText = this.el.textContent;
+        const glitchText = originalText.split('').map(char =>
+          Math.random() < 0.3
+            ? this.codeletters.charAt(Math.floor(Math.random() * this.codeletters.length))
+            : char
+        ).join('');
+
+        this.el.textContent = glitchText;
+
         // Restore after brief glitch
-        setTimeout(function() {
-          $(el).html(originalText);
+        setTimeout(() => {
+          this.el.textContent = originalText;
         }, 50 + Math.random() * 100);
       }
     }, 1000);
-  };
+  }
 
-  m.generateRandomString = function (length) {
-    var random_text = "";
+  /**
+   * Generates random string of specified length from codeletters
+   */
+  generateRandomString(length) {
+    let random_text = "";
     while (random_text.length < length) {
-      random_text += m.codeletters.charAt(
-        Math.floor(Math.random() * m.codeletters.length)
+      random_text += this.codeletters.charAt(
+        Math.floor(Math.random() * this.codeletters.length)
       );
     }
-
     return random_text;
-  };
+  }
 
-  m.animateIn = function () {
-    if (m.current_length < m.messages[m.message].length) {
+  /**
+   * Animates text in with random characters
+   */
+  animateIn() {
+    if (this.current_length < this.messages[this.message].length) {
       // Speed varies slightly for more organic feeling
-      m.current_length = m.current_length + (Math.random() < 0.3 ? 1 : 2);
-      if (m.current_length > m.messages[m.message].length) {
-        m.current_length = m.messages[m.message].length;
+      this.current_length = this.current_length + (Math.random() < 0.3 ? 1 : 2);
+      if (this.current_length > this.messages[this.message].length) {
+        this.current_length = this.messages[this.message].length;
       }
 
-      var message = m.generateRandomString(m.current_length);
-      $(el).html(message);
+      const message = this.generateRandomString(this.current_length);
+      this.el.textContent = message;
 
       // Slightly randomized timing
-      setTimeout(m.animateIn, 10 + Math.random() * 30);
+      setTimeout(() => this.animateIn(), 10 + Math.random() * 30);
     } else {
-      setTimeout(m.animateFadeBuffer, 20);
+      setTimeout(() => this.animateFadeBuffer(), 20);
     }
-  };
+  }
 
-  m.animateFadeBuffer = function () {
-    if (m.fadeBuffer === false) {
-      m.fadeBuffer = [];
-      for (var i = 0; i < m.messages[m.message].length; i++) {
-        m.fadeBuffer.push({
+  /**
+   * Fades in actual message characters from random characters
+   */
+  animateFadeBuffer() {
+    if (this.fadeBuffer === false) {
+      this.fadeBuffer = [];
+      for (let i = 0; i < this.messages[this.message].length; i++) {
+        this.fadeBuffer.push({
           c: Math.floor(Math.random() * 18) + 1, // More iterations for matrix-like effect
-          l: m.messages[m.message].charAt(i),
+          l: this.messages[this.message].charAt(i),
           flicker: Math.random() < 0.4, // Some characters will flicker
         });
       }
     }
 
-    var do_cycles = false;
-    var message = "";
+    let do_cycles = false;
+    let message = "";
 
-    for (var i = 0; i < m.fadeBuffer.length; i++) {
-      var fader = m.fadeBuffer[i];
+    for (let i = 0; i < this.fadeBuffer.length; i++) {
+      const fader = this.fadeBuffer[i];
       if (fader.c > 0) {
         do_cycles = true;
         fader.c--;
-        message += m.codeletters.charAt(
-          Math.floor(Math.random() * m.codeletters.length)
+        message += this.codeletters.charAt(
+          Math.floor(Math.random() * this.codeletters.length)
         );
       } else {
         // Occasionally flicker even after character is revealed
         if (fader.flicker && Math.random() < 0.03) {
-          message += m.codeletters.charAt(
-            Math.floor(Math.random() * m.codeletters.length)
+          message += this.codeletters.charAt(
+            Math.floor(Math.random() * this.codeletters.length)
           );
         } else {
           message += fader.l;
@@ -163,63 +186,73 @@ var Messenger = function (el) {
       }
     }
 
-    $(el).html(message);
+    this.el.textContent = message;
 
     if (do_cycles === true) {
-      setTimeout(m.animateFadeBuffer, 40 + Math.random() * 20);
+      setTimeout(() => this.animateFadeBuffer(), 40 + Math.random() * 20);
     } else {
-      setTimeout(m.cycleText, 2000);
+      setTimeout(() => this.cycleText(), 2000);
     }
-  };
+  }
 
-  m.cycleText = function () {
-    m.message = m.message + 1;
-    if (m.message >= m.messages.length) {
-      m.message = 0;
+  /**
+   * Cycles to next message
+   */
+  cycleText() {
+    this.message = this.message + 1;
+    if (this.message >= this.messages.length) {
+      this.message = 0;
     }
 
-    m.current_length = 0;
-    m.fadeBuffer = false;
-    $(el).html("");
+    this.current_length = 0;
+    this.fadeBuffer = false;
+    this.el.textContent = "";
 
-    setTimeout(m.animateIn, 200);
-  };
+    setTimeout(() => this.animateIn(), 200);
+  }
 
-  m.init();
-  
-  // Cleanup function to remove intervals when needed
-  m.destroy = function() {
-    if (m.glitchInterval) {
-      clearInterval(m.glitchInterval);
+  /**
+   * Cleanup function to remove intervals
+   */
+  destroy() {
+    if (this.glitchInterval) {
+      clearInterval(this.glitchInterval);
     }
-  };
-};
+  }
+}
 
-var messenger = new Messenger($("#messenger"));
+// ======================
+// MATRIX RAIN EFFECT
+// ======================
 
-// Add falling matrix characters in background
+/**
+ * Creates falling matrix rain characters in background
+ */
 function createMatrixRain() {
   const matrixBg = document.getElementById('matrix-bg');
   if (!matrixBg) return;
-  
+
   const width = window.innerWidth;
   const charCount = Math.floor(width / 20); // Approx number of columns
-  
+
   for (let i = 0; i < charCount; i++) {
-    let column = document.createElement('div');
+    const column = document.createElement('div');
     column.className = 'matrix-column';
-    column.style.left = (i * 20) + 'px';
-    column.style.animationDelay = (Math.random() * 5) + 's';
-    column.style.position = 'absolute';
-    column.style.top = '0';
-    column.style.color = '#0f0';
-    column.style.fontSize = '4px';
-    column.style.textShadow = '0 0 5px #0f0';
-    column.style.opacity = (0.1 + Math.random() * 0.5);
-    
+
+    Object.assign(column.style, {
+      left: (i * 20) + 'px',
+      animationDelay: (Math.random() * 5) + 's',
+      position: 'absolute',
+      top: '0',
+      color: '#0f0',
+      fontSize: '4px',
+      textShadow: '0 0 5px #0f0',
+      opacity: (0.1 + Math.random() * 0.5).toString()
+    });
+
     const height = Math.floor(Math.random() * 30) + 10;
     for (let j = 0; j < height; j++) {
-      let char = document.createElement('div');
+      const char = document.createElement('div');
       char.textContent = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ01010101".charAt(
         Math.floor(Math.random() * "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ01010101".length)
       );
@@ -227,54 +260,39 @@ function createMatrixRain() {
       char.style.animationDelay = (j * 0.1) + 's';
       column.appendChild(char);
     }
-    
+
     matrixBg.appendChild(column);
   }
 }
 
-// Initialize the matrix rain effect
-setTimeout(createMatrixRain, 300);
+// ======================
+// FIRST NAME GLITCH EFFECT
+// ======================
 
-// Add some CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes matrix-fall {
-    0% { transform: translateY(-100vh); opacity: 1; }
-    80% { opacity: 0.8; }
-    100% { transform: translateY(100vh); opacity: 0; }
-  }
-  
-  .matrix-column {
-    animation: matrix-sway 3s ease-in-out infinite alternate;
-  }
-  
-  @keyframes matrix-sway {
-    from { transform: translateX(-10px); }
-    to { transform: translateX(10px); }
-  }
-`;
-document.head.appendChild(style);
-
-// Add the glitching effect to the first name with flickering light
+/**
+ * Adds glitching effect to first name with flickering light
+ */
 function glitchFirstName() {
   const firstNameEl = document.querySelector('.text-secondary');
   if (!firstNameEl) return;
-  
+
   // Store the original text
   const originalText = firstNameEl.textContent;
-  
+
   // Matrix-like characters
   const matrixChars = "ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ01010101";
-  
+
   // Apply Matrix styling
-  firstNameEl.style.color = '#0f0';
-  firstNameEl.style.textShadow = '0 0 5px #0f0, 0 0 10px #0f0';
-  firstNameEl.style.transition = 'text-shadow 0.05s, color 0.05s';
-  
+  Object.assign(firstNameEl.style, {
+    color: '#0f0',
+    textShadow: '0 0 5px #0f0, 0 0 10px #0f0',
+    transition: 'text-shadow 0.05s, color 0.05s'
+  });
+
   // Normal bright glow state
   const normalGlow = '0 0 5px #0f0, 0 0 10px #0f0';
   const normalColor = '#0f0';
-  
+
   // Different dimmer states to simulate flickering
   const dimStates = [
     { shadow: '0 0 3px #0a0, 0 0 5px #0a0', color: '#0b0' },
@@ -282,15 +300,17 @@ function glitchFirstName() {
     { shadow: '0 0 1px #050, 0 0 2px #050', color: '#080' },
     { shadow: 'none', color: '#050' }  // Almost burned out
   ];
-  
-  // Flicker the light randomly
+
+  /**
+   * Flickers the light randomly
+   */
   function flickerLight() {
     // 25% chance of flicker occurring
     if (Math.random() < 0.25) {
       // Choose how severe the flicker is
       let severity;
       const rand = Math.random();
-      
+
       if (rand < 0.6) {
         // Minor flicker (60% chance)
         severity = 0;
@@ -301,15 +321,15 @@ function glitchFirstName() {
         // Major flicker/brownout (10% chance)
         severity = Math.floor(Math.random() * 2) + 2; // Either 2 or 3
       }
-      
+
       // Apply the flicker effect
       firstNameEl.style.textShadow = dimStates[severity].shadow;
       firstNameEl.style.color = dimStates[severity].color;
-      
+
       // Sometimes have multiple flickers in succession
       const flickers = (Math.random() < 0.3) ? Math.floor(Math.random() * 3) + 2 : 1;
       let flickerCount = 0;
-      
+
       // Function to flicker back and forth
       function singleFlicker() {
         setTimeout(() => {
@@ -324,25 +344,25 @@ function glitchFirstName() {
             firstNameEl.style.textShadow = dimStates[newSeverity].shadow;
             firstNameEl.style.color = dimStates[newSeverity].color;
           }
-          
+
           flickerCount++;
           if (flickerCount < flickers * 2) {
             singleFlicker();
           }
         }, 30 + Math.random() * 100); // Random timing between flickers
       }
-      
+
       singleFlicker();
     }
   }
-  
-  // Set up occasional glitching
+
+  // Set up occasional glitching and flickering
   setInterval(() => {
     // Glitch characters occasionally (20% chance)
     if (Math.random() < 0.2) {
       // Create a glitched version of the text
       const textArray = originalText.split('');
-      
+
       // Randomly replace 1-2 characters
       const numGlitches = Math.floor(Math.random() * 2) + 1;
       for (let i = 0; i < numGlitches; i++) {
@@ -351,24 +371,70 @@ function glitchFirstName() {
           Math.floor(Math.random() * matrixChars.length)
         );
       }
-      
+
       // Apply glitched text
       firstNameEl.textContent = textArray.join('');
-      
+
       // Reset after a brief moment (50-150ms)
       setTimeout(() => {
         firstNameEl.textContent = originalText;
       }, 50 + Math.random() * 100);
     }
-    
+
     // Check for light flicker with independent timing
     flickerLight();
-    
+
   }, 800); // Check for potential effects every 800ms
 }
 
-// Initialize first name glitch effect
+// ======================
+// CSS ANIMATIONS
+// ======================
+
+/**
+ * Injects CSS keyframe animations for matrix effects
+ */
+function injectMatrixAnimations() {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes matrix-fall {
+      0% { transform: translateY(-100vh); opacity: 1; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .matrix-column {
+      animation: matrix-sway 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes matrix-sway {
+      from { transform: translateX(-10px); }
+      to { transform: translateX(10px); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// ======================
+// INITIALIZATION
+// ======================
+
+/**
+ * Initialize all effects when DOM is ready
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  // Wait a bit before starting the first name glitch effect
+  // Initialize messenger animation
+  const messengerEl = document.getElementById('messenger');
+  if (messengerEl) {
+    new Messenger(messengerEl);
+  }
+
+  // Inject CSS animations
+  injectMatrixAnimations();
+
+  // Initialize matrix rain effect
+  setTimeout(createMatrixRain, 300);
+
+  // Initialize first name glitch effect
   setTimeout(glitchFirstName, 500);
 });

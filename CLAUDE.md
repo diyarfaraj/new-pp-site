@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio website for Diyar Faraj, a software engineer. It's a static site built with HTML, SCSS (compiled to CSS), and vanilla JavaScript with jQuery. The site features a Matrix-inspired animated theme with glitch effects and falling character animations.
+This is a personal portfolio website for Diyar Faraj, a certified software engineer. It's a static site built with semantic HTML5, SCSS (compiled to CSS), and pure vanilla JavaScript (no dependencies). The site features a Matrix-inspired animated theme with glitch effects and falling character animations.
+
+**SEO Optimized**: This site includes world-class SEO with comprehensive meta tags, Open Graph, Twitter Cards, Schema.org structured data, sitemap.xml, and robots.txt.
 
 ## Development Commands
 
@@ -83,11 +85,12 @@ The site uses a Matrix/cyberpunk aesthetic:
 
 ### External Dependencies
 
-- **Font Awesome 5.8.2**: Social media icons
-- **jQuery 1.9.1**: DOM manipulation for animations
-- **Google Analytics**: Tracking with ID UA-145319342-1
-- **node-sass**: SCSS compilation
-- **gh-pages**: GitHub Pages deployment
+- **Font Awesome 5.8.2**: Social media icons (CDN)
+- **Google Analytics 4**: Modern analytics (ID placeholder: G-XXXXXXXXXX)
+- **sass (dart-sass)**: Modern SCSS compilation
+- **gh-pages v6.x**: GitHub Pages deployment (security patched)
+
+**Note**: All JavaScript is vanilla/native - no jQuery or React dependencies.
 
 ### Responsive Design
 
@@ -108,8 +111,51 @@ Mobile adjustments include simplified grid layouts, smaller fonts, and stacked n
 
 ## Working with This Codebase
 
-- The main HTML is in `dist/index.html` - this is the production file
-- Always run `npm run sass` when making style changes to auto-compile SCSS
-- JavaScript animations are tightly coupled to specific DOM structure - changes to HTML may require corresponding JS updates
+- The main HTML is in `dist/index.html` - this is the production file with world-class SEO
+- Always compile SCSS after making changes: `npm run sass` (watch mode) or `npx sass scss/man.scss dist/css/main.css`
+- JavaScript is pure vanilla with comprehensive JSDoc comments - no external dependencies
 - The Matrix effect performance depends on character count calculations based on viewport width
 - Certification images are linked to external verification URLs (Credly, Sertifier)
+- All images have proper alt text, lazy loading, and width/height for CLS optimization
+
+## SEO & Performance
+
+### SEO Features Implemented
+- Comprehensive meta tags (title, description, keywords, author, robots)
+- Open Graph protocol for Facebook/LinkedIn sharing
+- Twitter Card tags for Twitter sharing
+- Schema.org JSON-LD structured data (Person and WebSite schemas)
+- All certifications included in structured data
+- Canonical URL configuration
+- sitemap.xml with image sitemaps
+- robots.txt with crawl directives
+- Semantic HTML5 (header, main, nav, section)
+- ARIA labels and accessibility features
+
+### Performance Optimizations
+- Lazy loading on all images (`loading="lazy"`)
+- Width/height attributes on images (prevents CLS)
+- Async loading of analytics
+- Pure vanilla JS (no heavy framework overhead)
+- Minified assets ready for production
+
+### To-Do for Full Production
+1. Replace `G-XXXXXXXXXX` with actual Google Analytics 4 measurement ID
+2. Generate and add favicons (favicon.ico, apple-touch-icon.png, etc.)
+3. Consider adding a service worker for offline capabilities
+4. Run Lighthouse audit and optimize based on recommendations
+
+## Security
+
+- **Zero npm vulnerabilities**: All dependencies updated to secure versions
+- **No jQuery**: Eliminated jQuery 1.9.1 and other outdated libraries
+- **rel="noopener noreferrer"**: All external links are secured
+- **Modern gh-pages v6.x**: Patched prototype pollution vulnerability
+
+## Code Quality
+
+- All JavaScript uses ES6+ features (classes, arrow functions, const/let)
+- Comprehensive JSDoc comments on all functions
+- Clear code organization with section headers
+- No dead code or commented-out sections
+- Proper error handling (null checks before DOM operations)

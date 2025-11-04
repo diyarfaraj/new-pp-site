@@ -1,0 +1,13 @@
+# robots.txt for https://diyarfaraj.com/
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://diyarfaraj.com/sitemap.xml
+
+# Crawl-delay (optional, be nice to servers)
+Crawl-delay: 1
+
+# Disallow sensitive or unnecessary paths (none currently)
+# Disallow: /private/
