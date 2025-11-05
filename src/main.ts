@@ -83,10 +83,10 @@ class Messenger {
     ];
 
     // Apply Matrix-style CSS
-    this.el.style.color = '#0a8f0a';
-    this.el.style.textShadow = '0 0 5px rgba(0, 255, 0, 0.3), 0 0 10px rgba(0, 255, 0, 0.2)';
+    this.el.style.color = '#0f0';
+    this.el.style.textShadow = '0 0 10px #0f0, 0 0 20px #0f0';
     this.el.style.fontFamily = 'monospace, consolas, courier new';
-    this.el.style.fontSize = '9px';
+    this.el.style.fontSize = '11px';
     this.el.style.position = 'static';
     this.el.style.transform = 'none';
     this.el.style.textAlign = 'left';
@@ -313,21 +313,21 @@ function glitchFirstName(): void {
 
   // Apply Matrix styling
   Object.assign(firstNameEl.style, {
-    color: '#0a8f0a',
-    textShadow: '0 0 5px rgba(0, 255, 0, 0.3), 0 0 10px rgba(0, 255, 0, 0.2)',
+    color: '#0f0',
+    textShadow: '0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0',
     transition: 'text-shadow 0.05s, color 0.05s'
   });
 
   // Normal bright glow state
-  const normalGlow = '0 0 5px rgba(0, 255, 0, 0.3), 0 0 10px rgba(0, 255, 0, 0.2)';
-  const normalColor = '#0a8f0a';
+  const normalGlow = '0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0';
+  const normalColor = '#0f0';
 
   // Different dimmer states to simulate flickering
   const dimStates: DimState[] = [
-    { shadow: '0 0 3px rgba(0, 255, 0, 0.2), 0 0 5px rgba(0, 255, 0, 0.15)', color: '#087008' },
-    { shadow: '0 0 2px rgba(0, 255, 0, 0.15), 0 0 4px rgba(0, 255, 0, 0.1)', color: '#065006' },
-    { shadow: '0 0 1px rgba(0, 255, 0, 0.1)', color: '#044004' },
-    { shadow: 'none', color: '#033003' }  // Almost burned out
+    { shadow: '0 0 8px #0f0, 0 0 15px #0f0', color: '#0c0' },
+    { shadow: '0 0 5px #0a0', color: '#0a0' },
+    { shadow: '0 0 3px #080', color: '#080' },
+    { shadow: 'none', color: '#050' }  // Almost burned out
   ];
 
   /**
