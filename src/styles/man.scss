@@ -122,9 +122,36 @@ main {
     margin: 0;
     padding: 0;
     min-height: 1.5rem;
-    font-size: 11px;
+    font-size: 1.0rem;
     color: #0f0;
     text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+  }
+}
+
+// Static prompt styling
+.prompt {
+  color: #666;
+  text-shadow: none;
+}
+
+// Typing cursor animation
+.cursor {
+  color: #0f0;
+  text-shadow: 0 0 10px #0f0;
+  animation: blink 0.5s step-end infinite;
+  margin-right: 8px;
+
+  &.static {
+    animation: none;
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
   }
 }
 

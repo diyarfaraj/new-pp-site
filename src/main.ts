@@ -26,6 +26,75 @@ interface DimState {
 }
 
 // ======================
+// TYPEWRITER EFFECT
+// ======================
+
+/**
+ * TypeWriter class - Creates command-line style typing effect
+ * Types text character by character with blinking cursor
+ */
+class TypeWriter {
+  private element: HTMLElement;
+  private cursorElement: HTMLElement;
+  private text: string;
+  private currentIndex: number;
+  private minDelay: number;
+  private maxDelay: number;
+
+  constructor(element: HTMLElement, cursorElement: HTMLElement, text: string) {
+    this.element = element;
+    this.cursorElement = cursorElement;
+    this.text = text;
+    this.currentIndex = 0;
+    this.minDelay = 80;
+    this.maxDelay = 120;
+  }
+
+  /**
+   * Show blinking cursor and wait before starting to type
+   */
+  async showCursor(delay: number = 700): Promise<void> {
+    this.cursorElement.style.display = 'inline';
+    return new Promise(resolve => setTimeout(resolve, delay));
+  }
+
+  /**
+   * Type text character by character
+   */
+  async type(): Promise<void> {
+    return new Promise((resolve) => {
+      const typeChar = () => {
+        if (this.currentIndex < this.text.length) {
+          this.element.textContent = this.text.substring(0, this.currentIndex + 1);
+          this.currentIndex++;
+          const delay = this.minDelay + Math.random() * (this.maxDelay - this.minDelay);
+          setTimeout(typeChar, delay);
+        } else {
+          resolve();
+        }
+      };
+      typeChar();
+    });
+  }
+
+  /**
+   * Stop cursor blinking but keep it visible
+   */
+  stopCursorBlink(): void {
+    this.cursorElement.classList.add('static');
+  }
+
+  /**
+   * Complete typing sequence: show cursor, type, stop blink
+   */
+  async execute(): Promise<void> {
+    await this.showCursor();
+    await this.type();
+    this.stopCursorBlink();
+  }
+}
+
+// ======================
 // MESSENGER ANIMATION
 // ======================
 
@@ -35,6 +104,7 @@ interface DimState {
  */
 class Messenger {
   private el: HTMLElement;
+  private textEl: HTMLElement;
   private codeletters: string;
   private message: number;
   private current_length: number;
@@ -42,8 +112,9 @@ class Messenger {
   private glitchInterval: number | null;
   private messages: string[];
 
-  constructor(el: HTMLElement) {
+  constructor(el: HTMLElement, textEl: HTMLElement) {
     this.el = el;
+    this.textEl = textEl;
     this.codeletters = '';
     this.message = 0;
     this.current_length = 0;
@@ -72,32 +143,27 @@ class Messenger {
     // Interval for glitch effect
     this.glitchInterval = null;
 
-    // Messages to cycle through
+    // Messages to cycle through (prompt is static in HTML)
     this.messages = [
       "Software Engineer",
-      "C#/.NET, React, Vue, Flutter",
+      "C#/.NET",
       "DevOps",
       "Kubernetes",
       "Linux",
       "Azure",
     ];
 
-    // Apply Matrix-style CSS
-    this.el.style.color = '#0f0';
-    this.el.style.textShadow = '0 0 10px #0f0, 0 0 20px #0f0';
-    this.el.style.fontFamily = 'monospace, consolas, courier new';
-    this.el.style.fontSize = '11px';
-    this.el.style.position = 'static';
-    this.el.style.transform = 'none';
-    this.el.style.textAlign = 'left';
-
-    // Create background element for matrix effect - disabled, using background image
-    // this.createMatrixBackground();
-
     // Start the glitch effect
     this.startGlitchEffect();
 
-    // Start animation
+    // Note: Animation start is now controlled externally via startAnimation()
+  }
+
+  /**
+   * Start the messenger cycling animation
+   * Call this after initial typing effect is complete
+   */
+  public startAnimation(): void {
     setTimeout(() => this.animateIn(), 100);
   }
 
@@ -107,18 +173,18 @@ class Messenger {
   private startGlitchEffect(): void {
     this.glitchInterval = window.setInterval(() => {
       if (Math.random() < 0.1) {
-        const originalText = this.el.textContent || '';
+        const originalText = this.textEl.textContent || '';
         const glitchText = originalText.split('').map(char =>
           Math.random() < 0.3
             ? this.codeletters.charAt(Math.floor(Math.random() * this.codeletters.length))
             : char
         ).join('');
 
-        this.el.textContent = glitchText;
+        this.textEl.textContent = glitchText;
 
         // Restore after brief glitch
         setTimeout(() => {
-          this.el.textContent = originalText;
+          this.textEl.textContent = originalText;
         }, 50 + Math.random() * 100);
       }
     }, 1000);
@@ -149,7 +215,7 @@ class Messenger {
       }
 
       const message = this.generateRandomString(this.current_length);
-      this.el.textContent = message;
+      this.textEl.textContent = message;
 
       // Slightly randomized timing
       setTimeout(() => this.animateIn(), 10 + Math.random() * 30);
@@ -196,7 +262,7 @@ class Messenger {
       }
     }
 
-    this.el.textContent = message;
+    this.textEl.textContent = message;
 
     if (do_cycles === true) {
       setTimeout(() => this.animateFadeBuffer(), 40 + Math.random() * 20);
@@ -216,7 +282,7 @@ class Messenger {
 
     this.current_length = 0;
     this.fadeBuffer = false;
-    this.el.textContent = "";
+    this.textEl.textContent = "";
 
     setTimeout(() => this.animateIn(), 200);
   }
@@ -432,11 +498,35 @@ function injectMatrixAnimations(): void {
 /**
  * Initialize all effects when DOM is ready
  */
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize messenger animation
+document.addEventListener('DOMContentLoaded', async () => {
+  // Get all required elements
+  const nameTextEl = document.getElementById('name-text');
+  const nameCursorEl = document.querySelector('h1 .cursor') as HTMLElement;
   const messengerEl = document.getElementById('messenger');
-  if (messengerEl) {
-    new Messenger(messengerEl);
+  const messengerTextEl = document.getElementById('messenger-text');
+  const messengerCursorEl = document.querySelector('#messenger .cursor') as HTMLElement;
+
+  if (nameTextEl && nameCursorEl && messengerEl && messengerTextEl && messengerCursorEl) {
+    // 1. Type name first (prompt is static in HTML)
+    const nameTyper = new TypeWriter(nameTextEl, nameCursorEl, 'Diyar Faraj');
+    await nameTyper.execute();
+
+    // 2. Small delay before messenger starts typing
+    await new Promise(resolve => setTimeout(resolve, 200));
+
+    // 3. Initialize messenger (but don't start cycling yet)
+    const messenger = new Messenger(messengerEl, messengerTextEl);
+
+    // 4. Type first messenger message (prompt is static in HTML)
+    const firstMessage = 'Software Engineer';
+    const messengerTyper = new TypeWriter(messengerTextEl, messengerCursorEl, firstMessage);
+    await messengerTyper.execute();
+
+    // 5. Start messenger cycling animation
+    messenger.startAnimation();
+
+    // 6. Enable name glitch effect after everything is typed
+    setTimeout(glitchFirstName, 500);
   }
 
   // Inject CSS animations (keeping for potential future use)
@@ -444,7 +534,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Matrix rain effect disabled - using background image instead
   // setTimeout(createMatrixRain, 300);
-
-  // Initialize first name glitch effect
-  setTimeout(glitchFirstName, 500);
 });
