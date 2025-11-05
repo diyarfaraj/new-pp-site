@@ -103,7 +103,6 @@ class TypeWriter {
  * Cycles through messages with random character effects
  */
 class Messenger {
-  private el: HTMLElement;
   private textEl: HTMLElement;
   private codeletters: string;
   private message: number;
@@ -112,8 +111,7 @@ class Messenger {
   private glitchInterval: number | null;
   private messages: string[];
 
-  constructor(el: HTMLElement, textEl: HTMLElement) {
-    this.el = el;
+  constructor(textEl: HTMLElement) {
     this.textEl = textEl;
     this.codeletters = '';
     this.message = 0;
@@ -502,11 +500,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Get all required elements
   const nameTextEl = document.getElementById('name-text');
   const nameCursorEl = document.querySelector('h1 .cursor') as HTMLElement;
-  const messengerEl = document.getElementById('messenger');
   const messengerTextEl = document.getElementById('messenger-text');
   const messengerCursorEl = document.querySelector('#messenger .cursor') as HTMLElement;
 
-  if (nameTextEl && nameCursorEl && messengerEl && messengerTextEl && messengerCursorEl) {
+  if (nameTextEl && nameCursorEl && messengerTextEl && messengerCursorEl) {
     // 1. Type name first (prompt is static in HTML)
     const nameTyper = new TypeWriter(nameTextEl, nameCursorEl, 'Diyar Faraj');
     await nameTyper.execute();
@@ -515,7 +512,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await new Promise(resolve => setTimeout(resolve, 200));
 
     // 3. Initialize messenger (but don't start cycling yet)
-    const messenger = new Messenger(messengerEl, messengerTextEl);
+    const messenger = new Messenger(messengerTextEl);
 
     // 4. Type first messenger message (prompt is static in HTML)
     const firstMessage = 'Software Engineer';
