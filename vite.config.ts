@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     outDir: '../dist',
     emptyOutDir: true,
-    minify: 'terser',
+    minify: 'esbuild',
     sourcemap: true,
   },
   css: {

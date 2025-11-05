@@ -102,25 +102,6 @@ class Messenger {
   }
 
   /**
-   * Creates background container for matrix rain effect
-   */
-  private createMatrixBackground(): void {
-    const matrixBg = document.createElement('div');
-    matrixBg.id = 'matrix-bg';
-    Object.assign(matrixBg.style, {
-      position: 'fixed',
-      top: '0',
-      left: '0',
-      right: '0',
-      bottom: '0',
-      pointerEvents: 'none',
-      zIndex: '-1',
-      opacity: '0.1'
-    });
-    document.body.appendChild(matrixBg);
-  }
-
-  /**
    * Starts random glitch effect on text
    */
   private startGlitchEffect(): void {
@@ -352,8 +333,8 @@ function glitchFirstName(): void {
       }
 
       // Apply the flicker effect
-      firstNameEl.style.textShadow = dimStates[severity].shadow;
-      firstNameEl.style.color = dimStates[severity].color;
+      firstNameEl!.style.textShadow = dimStates[severity].shadow;
+      firstNameEl!.style.color = dimStates[severity].color;
 
       // Sometimes have multiple flickers in succession
       const flickers = (Math.random() < 0.3) ? Math.floor(Math.random() * 3) + 2 : 1;
@@ -365,13 +346,13 @@ function glitchFirstName(): void {
           // Flip between dim and normal
           if (flickerCount % 2 === 0) {
             // Back to normal
-            firstNameEl.style.textShadow = normalGlow;
-            firstNameEl.style.color = normalColor;
+            firstNameEl!.style.textShadow = normalGlow;
+            firstNameEl!.style.color = normalColor;
           } else {
             // Dim again, possibly with different intensity
             const newSeverity = Math.min(Math.floor(Math.random() * 4), 3);
-            firstNameEl.style.textShadow = dimStates[newSeverity].shadow;
-            firstNameEl.style.color = dimStates[newSeverity].color;
+            firstNameEl!.style.textShadow = dimStates[newSeverity].shadow;
+            firstNameEl!.style.color = dimStates[newSeverity].color;
           }
 
           flickerCount++;
@@ -402,11 +383,11 @@ function glitchFirstName(): void {
       }
 
       // Apply glitched text
-      firstNameEl.textContent = textArray.join('');
+      firstNameEl!.textContent = textArray.join('');
 
       // Reset after a brief moment (50-150ms)
       setTimeout(() => {
-        firstNameEl.textContent = originalText;
+        firstNameEl!.textContent = originalText;
       }, 50 + Math.random() * 100);
     }
 
