@@ -160,6 +160,57 @@ class CertModal {
   }
 }
 
+// Certificate Glitch Effect
+class CertGlitch {
+  private baseFilter = 'grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.9) contrast(1.2)';
+  private glitchInterval: number | null = null;
+
+  constructor() {
+    this.initEvents();
+  }
+
+  private initEvents(): void {
+    const certItems = document.querySelectorAll('.cert-item');
+
+    certItems.forEach((item) => {
+      const img = item.querySelector('img') as HTMLImageElement;
+      if (!img) return;
+
+      item.addEventListener('mouseenter', () => this.startGlitch(img));
+      item.addEventListener('mouseleave', () => this.stopGlitch(img));
+    });
+  }
+
+  private startGlitch(img: HTMLImageElement): void {
+    this.glitchInterval = window.setInterval(() => {
+      // Random chance to glitch
+      if (Math.random() < 0.6) {
+        const hue = 90 + (Math.random() * 60 - 30); // 60-120
+        const saturate = 1 + Math.random() * 2; // 1-3
+        const brightness = 0.7 + Math.random() * 0.6; // 0.7-1.3
+        const contrast = 1 + Math.random() * 0.5; // 1-1.5
+
+        img.style.filter = `grayscale(100%) sepia(100%) hue-rotate(${hue}deg) saturate(${saturate}) brightness(${brightness}) contrast(${contrast})`;
+
+        // Quick flash back
+        setTimeout(() => {
+          if (this.glitchInterval) {
+            img.style.filter = this.baseFilter;
+          }
+        }, 50 + Math.random() * 50);
+      }
+    }, 100 + Math.random() * 100);
+  }
+
+  private stopGlitch(img: HTMLImageElement): void {
+    if (this.glitchInterval) {
+      clearInterval(this.glitchInterval);
+      this.glitchInterval = null;
+    }
+    img.style.filter = this.baseFilter;
+  }
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   // Small delay before starting the typing effect
@@ -170,4 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize certificate modal
   new CertModal();
+
+  // Initialize certificate glitch effect
+  new CertGlitch();
 });
