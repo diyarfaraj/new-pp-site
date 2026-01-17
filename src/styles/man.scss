@@ -1,403 +1,387 @@
 @use "sass:color";
 @use "config" as *;
-@use "menu";
-@use "mobile";
 
+// Reset
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-  background: black;
-  color: set-text-color($primary-color);
-  height: 100%;
-  margin: 0;
-  font-family: "Courier New", Courier, monospace !important;
+  background: #000;
+  color: #33ff33;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+// Terminal Main Container
+.terminal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 3rem 4rem;
+}
+
+// Terminal Content - Two Column Layout
+.terminal-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  flex: 1;
+  align-items: start;
+}
+
+// Left Column - Terminal Text Content
+.terminal-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.terminal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+// Terminal Prompts and Commands
+.terminal-prompt,
+.terminal-command {
+  color: #33ff33;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+// Name - Large heading
+.terminal-name {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #33ff33;
+  text-shadow: 0 0 10px rgba(51, 255, 51, 0.5);
+  line-height: 1.2;
+
+  &.ascii-art {
+    font-size: 0.65rem;
+    line-height: 1.1;
+    font-weight: 400;
+
+    pre {
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      white-space: pre;
+    }
+  }
+}
+
+// Title under name
+.terminal-title {
+  font-size: 1.1rem;
+  color: #d0d0d0;
+}
+
+// Skills Tags
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  color: #d0d0d0;
+  font-size: 1rem;
+}
+
+// Terminal Text (README content)
+.terminal-text {
+  color: #d0d0d0;
+  font-size: 1rem;
   line-height: 1.5;
-  z-index: 2;
 }
 
-//video
-.fullscreen-video-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-attachment: fixed;
-  background-size: cover;
-  overflow: hidden;
-  z-index: -1;
+// Contact Links
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-//headings
-h1,
-h2,
-h3 {
-  margin: 0;
-  font-weight: 400;
-
-  &.lg-heading {
-    font-size: 1.2rem;
-  }
-
-  &.sm-heading {
-    margin-bottom: 2rem;
-    padding: 0.2rem 1rem;
-  }
-}
-a {
-  color: #fff;
+.contact-tag {
+  color: #d0d0d0;
   text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  }
 }
 
-header {
-  position: fixed;
-  z-index: 2;
+// Right Column - Profile Image and Certs
+.terminal-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.profile-image-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 280px;
+}
+
+.profile-image {
   width: 100%;
-}
-
-.text-secondary {
-  color: $secondary-color;
-}
-
-main {
-  padding: 2rem;
-  height: 100%;
-  min-height: calc(100vh - 60px);
-  text-align: left;
-
-  .icons {
-    margin-top: 1rem;
-
-    a {
-      padding: 0.4rem;
-      display: inline-block;
-
-      &:hover {
-        color: $secondary-color;
-        @include easeOut();
-      }
-    }
-  }
-
-  &#home {
-    overflow: hidden;
-
-    h1 {
-      margin-bottom: 1rem;
-      text-align: left;
-      font-size: 1.0rem;
-      color: #0f0;
-      text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0;
-
-      .text-secondary {
-        color: #0f0;
-        text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0;
-      }
-    }
-  }
-  &#about {
-    overflow: auto;
-    h1 {
-      margin-top: -5vh;
-    }
-  }
-
-  &#work {
-    overflow: hidden;
-  }
-
-  &#contact {
-    overflow: hidden;
-  }
-}
-
-.messenger-container {
-  margin-bottom: 2rem;
-  text-align: left;
-  min-height: 2rem;
-
-  #messenger {
-    margin: 0;
-    padding: 0;
-    min-height: 1.5rem;
-    font-size: 1.0rem;
-    color: #0f0;
-    text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
-  }
-}
-
-// Static prompt styling
-.prompt {
-  color: #666;
-  text-shadow: none;
-}
-
-// Typing cursor animation
-.cursor {
-  color: #0f0;
-  text-shadow: 0 0 10px #0f0;
-  animation: blink 0.5s step-end infinite;
-  margin-right: 8px;
-
-  &.static {
-    animation: none;
-  }
-}
-
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0;
-  }
-}
-
-// Social links
-.social-links {
-  margin-bottom: 2rem;
-
-  .icons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.5rem;
-
-    a {
-      padding: 0;
-      color: #666;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: $secondary-color;
-      }
-
-      i {
-        font-size: 1.5rem;
-      }
-    }
-  }
+  height: auto;
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.9) contrast(1.2);
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  transform: scale(1.6);
+  transform-origin: center 20%;
 }
 
 // Certifications
 .certifications {
-  .certs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1rem;
-
-    a {
-      display: inline-block;
-      transition: opacity 0.3s ease;
-
-      &:hover {
-        opacity: 0.8;
-      }
-
-      img {
-        width: 60px;
-        height: 60px;
-        object-fit: contain;
-      }
-
-      // Make architect cert span width of 3 certs above
-      img[alt*="Architecture"] {
-        width: calc(180px + 2rem);
-        height: auto;
-      }
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
 }
 
-.about-info {
-  display: grid;
-  grid-gap: 30px;
-  grid-template-areas: "bioimage bio bio" "job1 job2 job3";
-  grid-template-columns: repeat(3, 1fr);
-
-  .bio-image {
-    grid-area: bioimage;
-    margin: auto;
-    border-radius: 50%;
-    border: $secondary-color solid 3px;
-  }
-
-  .bio {
-    grid-area: bio;
-    font-size: 1.8rem;
-  }
-
-  .job-1 {
-    grid-area: job1;
-  }
-
-  .job-2 {
-    grid-area: job2;
-  }
-
-  .job-3 {
-    grid-area: job3;
-  }
-
-  .job {
-    background: color.adjust($primary-color, $lightness: 5%);
-    padding: 0.5rem;
-    border-bottom: $secondary-color 5px solid;
-  }
+.cert-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 
-//works/ projects
-
-.projects {
-  display: grid;
-  grid-gap: 0.7rem;
-  grid-template-columns: repeat(3, 1fr);
+.cert-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
 
   img {
-    width: 100%;
-    border: 3px #fff solid;
-    &:hover {
-      opacity: 0.5;
-      border-color: $secondary-color;
-      @include easeOut;
-    }
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.9) contrast(1.2);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
   }
 }
 
-//Contact
+.cert-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 
-.con-image {
-  border-radius: 50%;
-  border: $secondary-color solid 3px;
+  .cert-item:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
-//button styles
-.btn {
-  display: block;
-  padding: 0.5rem 1rem;
-  border: 0;
-  margin-bottom: 0.3rem;
+.cert-action {
+  color: #33ff33;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
   &:hover {
-    background: $secondary-color;
-    color: set-text-color($secondary-color);
+    color: #88ff88;
+    text-shadow: 0 0 5px rgba(51, 255, 51, 0.5);
   }
 }
 
-.btn-dark {
-  @extend .btn;
-  background: color.adjust($primary-color, $lightness: -50%);
-  color: #fff;
+.cert-label {
+  color: #d0d0d0;
+  font-size: 0.85rem;
+  text-align: right;
 }
 
-.btn-light {
-  @extend .btn;
-  background: color.adjust($primary-color, $lightness: 50%);
-  color: #333;
+// Typing cursor
+.cursor {
+  color: #33ff33;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
 }
 
-//contact form
-.boxes {
-  display: grid;
-  grid-gap: 0.7rem;
-  grid-template-columns: 1fr 2fr;
-  margin-bottom: -40px;
+// Final cursor (stays visible after typing)
+.cursor-final {
+  color: #33ff33;
+  animation: blink 1s step-end infinite;
+  display: none;
 }
-/* Style inputs */
-input[type="text"],
-select,
-textarea {
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+// Typing output (hidden initially, shown by JS)
+.typing-output {
+  opacity: 0;
+  visibility: hidden;
+}
+
+// Certificate Modal
+.cert-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-  background: #ccc;
+  height: 100%;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+
+  &.active {
+    display: flex;
+  }
 }
 
-input[type="email"],
-select,
-textarea {
+.cert-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-  background: #ccc;
-}
-
-input[type="submit"] {
-  background-color: $secondary-color;
-  color: $primary-color;
-  padding: 12px 20px;
-  border: none;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
-input[type="submit"]:hover {
-  background-color: #45a049;
+.cert-modal-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
 }
 
-/* Style the container/contact section */
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 10px;
-}
+.cert-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
 
-/* Create two columns that float next to eachother */
-.column {
-  float: left;
-  width: 50%;
-  margin-top: 6px;
-  padding: 20px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-
-@media screen and (max-width: 600px) {
-  .column,
-  input[type="submit"] {
-    width: 100%;
-    margin-top: 0;
-  }
-
-  .contact {
-    grid-template-areas:
-      "lg-heading"
-      "sm-heading"
-      "con-image"
-      "forms";
-
-    float: none;
-    width: 100%;
-    min-height: 0;
+  &:hover {
+    color: #33ff33;
   }
 }
 
-label {
-  color: $secondary-color;
+.cert-modal-image {
+  max-width: 45vw;
+  max-height: 40vh;
+  object-fit: contain;
+  // No filter - show natural colors
+  filter: none;
 }
 
-:-ms-input-placeholder {
-  background: #ccc;
+// Links
+a {
+  color: #33ff33;
+  text-decoration: none;
 }
 
-#main-footer {
-  text-align: center;
-  padding: 1rem;
-  background: color.adjust($primary-color, $lightness: -10%);
-  color: set-text-color($primary-color);
-  height: 60px;
+// =====================
+// RESPONSIVE - MOBILE
+// =====================
+
+@include mediaMd {
+  .terminal {
+    padding: 2rem 1.5rem;
+  }
+
+  .terminal-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  // Reorder: image first on mobile
+  .terminal-right {
+    order: -1;
+    align-items: center;
+  }
+
+  .terminal-left {
+    text-align: left;
+  }
+
+  .terminal-name {
+    font-size: 2.5rem;
+
+    &.ascii-art {
+      font-size: 0.55rem;
+    }
+  }
+
+  .profile-image {
+    max-width: 220px;
+  }
+
+  .certifications {
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .cert-label {
+    text-align: center;
+  }
+}
+
+@include mediaSm {
+  .terminal {
+    padding: 1.5rem 1rem;
+  }
+
+  .terminal-name {
+    font-size: 2rem;
+
+    &.ascii-art {
+      font-size: 0.4rem;
+    }
+  }
+
+  .terminal-title {
+    font-size: 1rem;
+  }
+
+  .skills-tags {
+    gap: 0.25rem;
+  }
+
+  .skill-tag {
+    font-size: 0.9rem;
+  }
+
+  .profile-image {
+    max-width: 180px;
+  }
+
+  .cert-badges img {
+    width: 45px;
+    height: 45px;
+  }
 }

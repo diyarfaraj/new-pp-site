@@ -4,7 +4,17 @@
       "Bash(npm audit:*)",
       "Bash(npx sass:*)",
       "Bash(npm install:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(copy \"C:\\\\Users\\\\E1448755\\\\Downloads\\\\fixed professional image.png\" \"C:\\\\casa-repos\\\\new-pp-site\\\\dist\\\\img\\\\portrait.png\")",
+      "Bash(cmd /c copy \"C:\\\\Users\\\\E1448755\\\\Downloads\\\\fixed professional image.png\" \"C:\\\\casa-repos\\\\new-pp-site\\\\dist\\\\img\\\\portrait.png\")",
+      "Bash(powershell -Command \"Copy-Item ''C:\\\\Users\\\\E1448755\\\\Downloads\\\\fixed professional image.png'' -Destination ''C:\\\\casa-repos\\\\new-pp-site\\\\dist\\\\img\\\\portrait.png''\")",
+      "Bash(npm run sass:*)",
+      "Bash(powershell -Command \"Copy-Item ''C:\\\\Users\\\\E1448755\\\\Downloads\\\\fixed professional image.png'' -Destination ''C:\\\\casa-repos\\\\new-pp-site\\\\public\\\\img\\\\portrait.png''\")",
+      "Bash(powershell:*)",
+      "Bash(npx vite build:*)",
+      "Bash(dir:*)",
+      "Bash(npx tsc)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

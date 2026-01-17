@@ -3,8 +3,7 @@
 ## To run locally:
 
 - npm install
-- download extension "Live server" in vscode
-- right clikc in index.html and "open in live server"
+- npm run dev
 
 ## Publish changes:
 

@@ -3,29 +3,33 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://diyarfaraj.com/</loc>
-    <lastmod>2025-01-04</lastmod>
+    <lastmod>2026-01-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://diyarfaraj.com/img/portrait.jpg</image:loc>
-      <image:title>Diyar Faraj - Software Engineer</image:title>
-      <image:caption>Professional portrait of Diyar Faraj</image:caption>
+      <image:loc>https://diyarfaraj.com/img/portrait.png</image:loc>
+      <image:title>Diyar Faraj - Senior Backend and DevOps Engineer</image:title>
+      <image:caption>Professional portrait of Diyar Faraj, Backend and DevOps Engineer with 10 years experience</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://diyarfaraj.com/img/az900.png</image:loc>
-      <image:title>Microsoft Azure Fundamentals Certification</image:title>
+      <image:title>Microsoft Azure Fundamentals (AZ-900) Certification</image:title>
+      <image:caption>Diyar Faraj Microsoft Azure Fundamentals Certification Badge</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://diyarfaraj.com/img/aws-practitioner.png</image:loc>
       <image:title>AWS Certified Cloud Practitioner</image:title>
+      <image:caption>Diyar Faraj AWS Cloud Practitioner Certification Badge</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://diyarfaraj.com/img/azure-ai900.png</image:loc>
-      <image:title>Microsoft Azure AI Fundamentals Certification</image:title>
+      <image:title>Microsoft Azure AI Fundamentals (AI-900) Certification</image:title>
+      <image:caption>Diyar Faraj Microsoft Azure AI Fundamentals Certification Badge</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://diyarfaraj.com/img/architect-cert.png</image:loc>
       <image:title>Software Architecture Professional Certificate</image:title>
+      <image:caption>Diyar Faraj Software Architecture Certification Badge</image:caption>
     </image:image>
   </url>
 </urlset>
