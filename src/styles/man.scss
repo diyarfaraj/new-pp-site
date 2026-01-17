@@ -47,15 +47,15 @@ body {
 .terminal-section {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0;
 }
 
 // Terminal Prompts and Commands
 .terminal-prompt,
 .terminal-command {
   color: #33ff33;
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  margin-bottom: 0;
 }
 
 // Name - Large heading
@@ -67,7 +67,7 @@ body {
   line-height: 1.2;
 
   &.ascii-art {
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     line-height: 1.1;
     font-weight: 400;
 
@@ -81,7 +81,7 @@ body {
 
 // Title under name
 .terminal-title {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: #d0d0d0;
 }
 
@@ -94,13 +94,13 @@ body {
 
 .skill-tag {
   color: #d0d0d0;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 // Terminal Text (README content)
 .terminal-text {
   color: #d0d0d0;
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
@@ -114,7 +114,7 @@ body {
 .contact-tag {
   color: #d0d0d0;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
 
   &:hover {
@@ -134,13 +134,13 @@ body {
 .profile-image-container {
   position: relative;
   overflow: hidden;
-  max-width: 280px;
+  max-width: 180px;
 }
 
 .profile-image {
   width: 100%;
   height: auto;
-  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.9) contrast(1.2);
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.7) contrast(1.2);
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
   transform: scale(1.6);
