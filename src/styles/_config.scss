@@ -1,45 +1,25 @@
 @use "sass:color";
 
+// Legacy palette (kept for reference/compat)
 $primary-color: rgb(28, 87, 46);
 $secondary-color: #04830f;
-$show-home-image: true;
-$home-video: $primary-color;
-$background-opacity: 0.9;
+
+// Terminal palette
+$term-green: #33ff33;
+$term-green-soft: #88ff88;
+$term-text: #d0d0d0;
+$term-dim: #7a7a7a;
+$term-bg: #000;
+$term-bg-glass: rgba(0, 8, 2, 0.55);
+$term-border: rgba(51, 255, 51, 0.28);
+$term-blue: #57c7ff;
+$term-amber: #f3f99d;
+$term-red: #ff5c57;
+
+$term-font: "Courier New", Courier, monospace;
 
 @mixin easeOut {
   transition: all 0.5s ease-out;
-}
-
-@mixin background {
-  @if $show-home-image {
-    &#bg-img {
-      background: black;
-      background-attachment: fixed;
-      background-size: cover;
-
-      &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: rgba($primary-color, $background-opacity);
-      }
-    }
-  }
-}
-
-// set text color using modern color module
-
-@function set-text-color($clr) {
-  @if (color.channel($clr, "lightness", $space: hsl) > 40) {
-    @return #000;
-  }
-  @else {
-    @return #fff;
-  }
 }
 
 // media query mixins
@@ -64,6 +44,13 @@ $background-opacity: 0.9;
 
 @mixin mediaXl {
   @media screen and (min-width: 1171px) {
+    @content;
+  }
+}
+
+// Only animate for users who haven't opted out
+@mixin motionSafe {
+  @media (prefers-reduced-motion: no-preference) {
     @content;
   }
 }

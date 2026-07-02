@@ -4,158 +4,81 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio website for Diyar Faraj, a certified software engineer. It's a static site built with semantic HTML5, SCSS (compiled to CSS), and pure vanilla JavaScript (no dependencies). The site features a Matrix-inspired animated theme with glitch effects and falling character animations.
+Personal portfolio website for Diyar Faraj, a Senior Backend, DevOps & Cloud Engineer. It's a static site built with Vite, TypeScript, and SCSS — zero runtime dependencies. The site is styled as an authentic Linux terminal emulator: window chrome with title bar, bash-colored prompts, a typing intro, a fully interactive shell (with easter eggs), CRT scanline/glow effects, and a tmux-style status bar.
 
-**SEO Optimized**: This site includes world-class SEO with comprehensive meta tags, Open Graph, Twitter Cards, Schema.org structured data, sitemap.xml, and robots.txt.
+**SEO Optimized**: comprehensive meta tags, Open Graph (with a generated 1200×630 og-image), Twitter Cards, Schema.org JSON-LD (Person, WebSite, ProfilePage), sitemap.xml, robots.txt, and web manifest.
 
 ## Development Commands
 
-### Install Dependencies
 ```bash
-npm install
+npm install        # install dependencies
+npm run dev        # Vite dev server on http://localhost:3080
+npm run build      # tsc type-check + vite build → dist/
+npm run preview    # preview the production build
+npm run deploy     # build + publish dist/ to GitHub Pages (gh-pages branch)
 ```
 
-### Watch and Compile SCSS
-Watches the `scss/` directory and compiles SCSS files to `dist/css/` directory:
-```bash
-npm run sass
-```
-
-### Deploy to GitHub Pages
-Deploys the `dist/` directory to GitHub Pages:
-```bash
-npm run deploy
-```
-
-After deployment, manually configure the custom domain in GitHub repository settings (Settings > Pages > Custom domain: diyarfaraj.com).
-
-### Local Development
-1. Install dependencies: `npm install`
-2. Start SCSS watcher in one terminal: `npm run sass`
-3. Use VS Code "Live Server" extension: Right-click `dist/index.html` and select "Open with Live Server"
+After deployment, the custom domain (diyarfaraj.com) may need to be re-configured in GitHub repository settings (Settings > Pages > Custom domain).
 
 ## Project Architecture
 
 ### Directory Structure
-- `dist/` - Production build directory (deployed to GitHub Pages)
-  - `index.html` - Main HTML file
-  - `css/main.css` - Compiled CSS from SCSS
-  - `js/main.js` - Main JavaScript file with Matrix effects
-  - `img/` - Images including portrait and certification badges
-- `scss/` - SCSS source files
-  - `man.scss` - Main SCSS entry point
-  - `_config.scss` - Variables, mixins, and global functions
-  - `_menu.scss` - Navigation menu styles
-  - `_mobile.scss` - Responsive design breakpoints
-- `node_modules/` - Dependencies (gitignored)
+- `src/` — source files (Vite root)
+  - `index.html` — the page (SEO head + terminal markup)
+  - `main.ts` — all behavior (typing intro, interactive shell, modal, effects)
+  - `styles/man.scss` — main stylesheet entry
+  - `styles/_config.scss` — palette variables and media-query/motion mixins
+- `public/` — static assets copied verbatim into the build
+  - `img/` — portrait, certification badges, `og-image.png` (social preview)
+  - `favicon/` — favicons + `site.webmanifest`
+  - `sitemap.xml`, `robots.txt`
+- `dist/` — production build output (committed; deployed to GitHub Pages)
 
-### SCSS Organization
+Legacy note: the root `scss/` folder is a leftover from the pre-Vite site; the live styles are in `src/styles/`.
 
-The SCSS is modular with imports in `man.scss`:
-- **_config.scss**: Contains color variables (`$primary-color`, `$secondary-color`), mixins (`easeOut`, `background`), media query mixins (`mediaSm`, `mediaMd`, `mediaLg`, `mediaXl`), and utility functions (`set-text-color`)
-- **_menu.scss**: Navigation menu and overlay styles with animated transitions
-- **_mobile.scss**: Responsive breakpoints for different screen sizes
+### TypeScript Architecture (`src/main.ts`)
 
-When modifying styles, edit files in `scss/` directory, not the compiled `dist/css/main.css`.
+Vanilla TS classes, no frameworks:
 
-### JavaScript Architecture
+1. **TerminalTyping** — types each section's command then reveals its output. Skippable via any click/keypress; with `prefers-reduced-motion` everything renders instantly.
+2. **Shell** — the interactive prompt at the bottom. Commands: `help`, `whoami`, `about`, `skills`, `certs`, `contact`, `neofetch`, `ls`, `pwd`, `date`, `uname`, `echo`, `history`, `clear`, `matrix`, `exit`, plus easter eggs (`sudo`, `rm`, `vim`, Ctrl+L, Ctrl+C). Supports ↑/↓ history and Tab completion. All user input is HTML-escaped before printing.
+3. **MatrixRain** — canvas-based falling-glyph effect triggered by the `matrix` command (time-boxed, motion-safe).
+4. **CertModal** — certificate [view]/[visit] actions with Escape-to-close and focus restore.
+5. **CertGlitch** — random hue-glitch filter on badge hover (per-image intervals, disabled under reduced motion).
 
-**Main JavaScript file**: `dist/js/main.js`
-
-Key components:
-1. **Messenger Animation System**: Matrix-inspired typing effect that cycles through career-related messages. Uses jQuery for DOM manipulation and custom animation timing.
-2. **Matrix Rain Background**: Creates falling character columns with Japanese-inspired glyphs (ﾊﾐﾋｰｳｼﾅ etc.) dynamically positioned across the viewport
-3. **First Name Glitch Effect**: Applies random character substitutions and flickering light effects to the name "Diyar" to simulate neon sign flicker
-4. **Menu Toggle System**: (Currently disabled but preserved) Handles navigation menu show/hide with CSS class toggling
-
-The animation system uses:
-- Randomized timing for organic feel
-- Character sets with Matrix-style glyphs
-- Multiple animation layers (text fade, glitch, flicker)
-- CSS animations injected via JavaScript for Matrix rain
+Content visibility rule: `.typing-output` is only hidden when `html.js` is set (inline script in `<head>`), so crawlers and no-JS users see all content.
 
 ### Styling Theme
 
-The site uses a Matrix/cyberpunk aesthetic:
-- Primary color: Dark green (`rgb(28, 87, 46)`)
-- Secondary color: Bright green (`#04830f`)
+Linux terminal / CRT aesthetic, defined in `src/styles/_config.scss`:
+- Terminal green `#33ff33` on black, body text `#d0d0d0`, path blue `#57c7ff`
 - Font: Courier New monospace
-- Effects: Green glow (`text-shadow: 0 0 5px #0f0`), flickering animations
-- Background: Black with animated falling Matrix characters
+- Terminal window chrome (title bar, dots, 80×24 badge), tmux-style status bar
+- CRT overlay: scanlines + vignette + subtle flicker (flicker only under `prefers-reduced-motion: no-preference`)
+- ASCII figlet name banner scales with `clamp()` so it never overflows on mobile
 
-### External Dependencies
-
-- **Font Awesome 5.8.2**: Social media icons (CDN)
-- **Google Analytics 4**: Modern analytics (ID placeholder: G-XXXXXXXXXX)
-- **sass (dart-sass)**: Modern SCSS compilation
-- **gh-pages v6.x**: GitHub Pages deployment (security patched)
-
-**Note**: All JavaScript is vanilla/native - no jQuery or React dependencies.
+When modifying styles, edit `src/styles/*.scss`; Vite compiles them.
 
 ### Responsive Design
 
-Media query breakpoints defined in `_config.scss`:
-- Small (phones): max-width 500px
-- Medium (tablets): max-width 768px
-- Large (laptops): 769px - 1170px
-- Extra Large (widescreens): min-width 1171px
-
-Mobile adjustments include simplified grid layouts, smaller fonts, and stacked navigation.
-
-## Deployment Notes
-
-- The site is deployed to GitHub Pages from the `dist/` directory
-- Custom domain: diyarfaraj.com (must be manually configured after each deployment)
-- GitHub Pages branch: gh-pages (automatically managed by gh-pages package)
-- All production files must be in `dist/` directory to be deployed
-
-## Working with This Codebase
-
-- The main HTML is in `dist/index.html` - this is the production file with world-class SEO
-- Always compile SCSS after making changes: `npm run sass` (watch mode) or `npx sass scss/man.scss dist/css/main.css`
-- JavaScript is pure vanilla with comprehensive JSDoc comments - no external dependencies
-- The Matrix effect performance depends on character count calculations based on viewport width
-- Certification images are linked to external verification URLs (Credly, Sertifier)
-- All images have proper alt text, lazy loading, and width/height for CLS optimization
+Breakpoint mixins in `_config.scss`: `mediaSm` (≤500px), `mediaMd` (≤768px), `mediaLg`, `mediaXl`. On mobile the layout stacks (portrait first), cert actions are always visible (no hover on touch), and the shell input uses a 16px floor to prevent iOS zoom-on-focus.
 
 ## SEO & Performance
 
-### SEO Features Implemented
-- Comprehensive meta tags (title, description, keywords, author, robots)
-- Open Graph protocol for Facebook/LinkedIn sharing
-- Twitter Card tags for Twitter sharing
-- Schema.org JSON-LD structured data (Person and WebSite schemas)
-- All certifications included in structured data
-- Canonical URL configuration
-- sitemap.xml with image sitemaps
-- robots.txt with crawl directives
-- Semantic HTML5 (header, main, nav, section)
-- ARIA labels and accessibility features
+- og-image: `public/img/og-image.png` (1200×630, terminal-style card). Regenerate by rendering an HTML card at 1200×630 with headless Chromium if the branding changes.
+- JSON-LD: Person (with credentials), WebSite, ProfilePage — keep in sync with visible content.
+- Update `<lastmod>` in `public/sitemap.xml` and `dateModified` in the ProfilePage schema when content changes.
+- All images have alt text and width/height; portrait uses `loading="eager" fetchpriority="high"`, badges lazy-load.
 
-### Performance Optimizations
-- Lazy loading on all images (`loading="lazy"`)
-- Width/height attributes on images (prevents CLS)
-- Async loading of analytics
-- Pure vanilla JS (no heavy framework overhead)
-- Minified assets ready for production
+## Accessibility
 
-### To-Do for Full Production
-1. Replace `G-XXXXXXXXXX` with actual Google Analytics 4 measurement ID
-2. Generate and add favicons (favicon.ico, apple-touch-icon.png, etc.)
-3. Consider adding a service worker for offline capabilities
-4. Run Lighthouse audit and optimize based on recommendations
+- Real `<button>` elements for cert actions with descriptive aria-labels
+- `h1` contains sr-only "Diyar Faraj" text; the ASCII banner is `aria-hidden`
+- Shell output is `role="log" aria-live="polite"`; decorative chrome is `aria-hidden`
+- `:focus-visible` outlines, `prefers-reduced-motion` respected everywhere
 
 ## Security
 
-- **Zero npm vulnerabilities**: All dependencies updated to secure versions
-- **No jQuery**: Eliminated jQuery 1.9.1 and other outdated libraries
-- **rel="noopener noreferrer"**: All external links are secured
-- **Modern gh-pages v6.x**: Patched prototype pollution vulnerability
-
-## Code Quality
-
-- All JavaScript uses ES6+ features (classes, arrow functions, const/let)
-- Comprehensive JSDoc comments on all functions
-- Clear code organization with section headers
-- No dead code or commented-out sections
-- Proper error handling (null checks before DOM operations)
+- Zero runtime dependencies (no jQuery/React)
+- `rel="noopener noreferrer"` on all external links
+- Shell echoes are HTML-escaped (`escapeHtml`) to prevent DOM injection

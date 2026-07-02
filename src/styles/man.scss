@@ -8,40 +8,211 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
-  background: #000;
-  color: #33ff33;
-  font-family: "Courier New", Courier, monospace;
+  background: radial-gradient(ellipse at 50% 40%, #041004 0%, #000 70%);
+  background-color: $term-bg;
+  color: $term-green;
+  font-family: $term-font;
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 1.25rem;
 }
 
-// Terminal Main Container
+::selection {
+  background: $term-green;
+  color: #000;
+}
+
+// Themed scrollbars
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 255, 51, 0.4) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(51, 255, 51, 0.35);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+a {
+  color: $term-green;
+  text-decoration: none;
+}
+
+// Keyboard focus — visible, terminal-flavored
+:focus-visible {
+  outline: 1px dashed $term-green;
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// =====================
+// CRT OVERLAY
+// =====================
+
+.crt {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  // Scanlines
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+
+  // Vignette
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.45) 100%);
+  }
+
+  @include motionSafe {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 60, 18, 0.03);
+      animation: crt-flicker 4s infinite;
+    }
+  }
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 0.9; }
+  8% { opacity: 0.6; }
+  9% { opacity: 0.9; }
+  42% { opacity: 0.8; }
+  43% { opacity: 1; }
+  71% { opacity: 0.7; }
+  72% { opacity: 0.95; }
+}
+
+// =====================
+// TERMINAL WINDOW
+// =====================
+
+.terminal-window {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1160px;
+  border: 1px solid $term-border;
+  border-radius: 10px;
+  background: $term-bg-glass;
+  box-shadow:
+    0 0 60px rgba(51, 255, 51, 0.12),
+    0 0 12px rgba(51, 255, 51, 0.08),
+    inset 0 0 120px rgba(0, 30, 0, 0.35);
+  overflow: hidden;
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid $term-border;
+  background: rgba(10, 25, 10, 0.6);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.titlebar-dots {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.dot-close { background: $term-red; }
+  &.dot-min { background: $term-amber; }
+  &.dot-max { background: $term-green; }
+}
+
+.titlebar-title {
+  flex: 1;
+  text-align: center;
+  color: $term-dim;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.titlebar-size {
+  color: $term-dim;
+  font-size: 0.75rem;
+}
+
+// =====================
+// TERMINAL BODY
+// =====================
+
 .terminal {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding: 3rem 4rem;
+  flex: 1;
+  padding: 1.75rem 2.5rem 1.25rem;
+  gap: 1.75rem;
 }
 
-// Terminal Content - Two Column Layout
+.terminal-lastlogin {
+  color: $term-dim;
+  font-size: 0.78rem;
+}
+
+// Two Column Layout
 .terminal-content {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 3rem;
-  flex: 1;
   align-items: start;
 }
 
-// Left Column - Terminal Text Content
 .terminal-left {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.9rem;
+  min-width: 0;
 }
 
 .terminal-section {
@@ -50,31 +221,46 @@ body {
   gap: 0;
 }
 
-// Terminal Prompts and Commands
+// Prompts and commands — bash-style coloring
 .terminal-prompt,
 .terminal-command {
-  color: #33ff33;
-  font-size: 0.8rem;
-  margin-bottom: 0;
+  color: $term-text;
+  font-size: 0.85rem;
+  margin-bottom: 0.15rem;
+  word-break: break-word;
 }
 
-// Name - Large heading
-.terminal-name {
-  font-size: 3rem;
+.p-user {
+  color: $term-green;
   font-weight: 700;
-  color: #33ff33;
+}
+
+.p-path {
+  color: $term-blue;
+  font-weight: 700;
+}
+
+.p-dollar {
+  color: $term-text;
+}
+
+// Name - ASCII banner
+.terminal-name {
+  color: $term-green;
   text-shadow: 0 0 10px rgba(51, 255, 51, 0.5);
   line-height: 1.2;
+  font-weight: 400;
 
-  &.ascii-art {
-    font-size: 0.55rem;
-    line-height: 1.1;
-    font-weight: 400;
+  &.ascii-art pre {
+    margin: 0;
+    font-family: $term-font;
+    white-space: pre;
+    // 52-char banner: scale with viewport, never overflow
+    font-size: clamp(5.5px, calc((100vw - 4rem) / 34), 11px);
+    line-height: 1.15;
 
-    pre {
-      margin: 0;
-      font-family: "Courier New", Courier, monospace;
-      white-space: pre;
+    @media screen and (min-width: 1240px) {
+      font-size: 11px;
     }
   }
 }
@@ -82,48 +268,85 @@ body {
 // Title under name
 .terminal-title {
   font-size: 0.95rem;
-  color: #d0d0d0;
+  color: $term-text;
+  margin-top: 0.35rem;
+
+  &::before {
+    content: "▸ ";
+    color: $term-green;
+  }
 }
 
 // Skills Tags
 .skills-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem 0.6rem;
 }
 
 .skill-tag {
-  color: #d0d0d0;
+  color: $term-text;
   font-size: 0.85rem;
+  border: 1px solid rgba(51, 255, 51, 0.2);
+  padding: 0.05rem 0.45rem;
+  border-radius: 3px;
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    color: $term-green;
+    border-color: rgba(51, 255, 51, 0.6);
+    box-shadow: 0 0 8px rgba(51, 255, 51, 0.25);
+  }
 }
 
 // Terminal Text (README content)
 .terminal-text {
-  color: #d0d0d0;
+  color: $term-text;
   font-size: 0.85rem;
-  line-height: 1.5;
+  line-height: 1.55;
+  max-width: 62ch;
+
+  + .terminal-text {
+    margin-top: 0.4rem;
+  }
 }
 
 // Contact Links
 .contact-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.5rem 0.9rem;
 }
 
 .contact-tag {
-  color: #d0d0d0;
+  color: $term-text;
   text-decoration: none;
   font-size: 0.85rem;
   transition: all 0.3s ease;
 
-  &:hover {
-    color: #fff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  &::before {
+    content: "→ ";
+    color: $term-green;
+    opacity: 0;
+    margin-left: -1.1em;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: $term-green;
+    text-shadow: 0 0 8px rgba(51, 255, 51, 0.6);
+
+    &::before {
+      opacity: 1;
+    }
   }
 }
 
-// Right Column - Profile Image and Certs
+// =====================
+// RIGHT COLUMN
+// =====================
+
 .terminal-right {
   display: flex;
   flex-direction: column;
@@ -135,9 +358,12 @@ body {
   position: relative;
   overflow: hidden;
   max-width: 180px;
+  border: 1px solid rgba(51, 255, 51, 0.2);
+  border-radius: 4px;
 }
 
 .profile-image {
+  display: block;
   width: 100%;
   height: auto;
   filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.7) contrast(1.2);
@@ -191,41 +417,53 @@ body {
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
 
-  .cert-item:hover & {
+  .cert-item:hover &,
+  .cert-item:focus-within & {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Touch devices: no hover — keep actions visible
+  @media (hover: none) {
     opacity: 1;
     visibility: visible;
   }
 }
 
 .cert-action {
-  color: #33ff33;
+  background: none;
+  border: none;
+  font-family: inherit;
+  color: $term-green;
   font-size: 0.75rem;
   cursor: pointer;
   transition: color 0.2s ease;
+  padding: 0.1rem 0.2rem;
 
   &:hover {
-    color: #88ff88;
+    color: $term-green-soft;
     text-shadow: 0 0 5px rgba(51, 255, 51, 0.5);
   }
 }
 
-.cert-label {
-  color: #d0d0d0;
-  font-size: 0.85rem;
-  text-align: right;
-}
+// =====================
+// CURSORS
+// =====================
 
-// Typing cursor
-.cursor {
-  color: #33ff33;
-  animation: blink 1s step-end infinite;
-  margin-left: 2px;
-}
-
-// Final cursor (stays visible after typing)
+// Block cursor (authentic terminal look)
+.cursor,
 .cursor-final {
-  color: #33ff33;
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  margin-left: 2px;
+  background: $term-green;
+  color: transparent;
+  vertical-align: text-bottom;
   animation: blink 1s step-end infinite;
+}
+
+.cursor-final {
   display: none;
 }
 
@@ -234,13 +472,147 @@ body {
   51%, 100% { opacity: 0; }
 }
 
-// Typing output (hidden initially, shown by JS)
-.typing-output {
+// Typing output — hidden only when JS is running the animation.
+// Without JS (crawlers, no-script), everything stays visible.
+html.js .typing-output {
   opacity: 0;
   visibility: hidden;
 }
 
-// Certificate Modal
+// =====================
+// INTERACTIVE SHELL
+// =====================
+
+.shell-section {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(51, 255, 51, 0.15);
+}
+
+html.js .shell-section {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
+
+  &.shell-ready {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.shell-hint {
+  color: $term-dim;
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+
+  b {
+    color: $term-green;
+    font-weight: 700;
+  }
+}
+
+.shell-output {
+  font-size: 0.85rem;
+  color: $term-text;
+  max-height: 40vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  pre {
+    font-family: $term-font;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0 0 0.35rem;
+    line-height: 1.45;
+  }
+
+  .out-green { color: $term-green; }
+  .out-dim { color: $term-dim; }
+  .out-blue { color: $term-blue; }
+  .out-amber { color: $term-amber; }
+  .out-red { color: $term-red; }
+
+  a {
+    color: $term-blue;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: $term-green;
+    }
+  }
+}
+
+.shell-input-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+}
+
+.shell-prompt {
+  white-space: nowrap;
+  color: $term-text;
+  cursor: text;
+}
+
+.shell-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $term-green;
+  font-family: $term-font;
+  font-size: max(0.85rem, 16px); // 16px floor prevents iOS zoom-on-focus
+  caret-color: $term-green;
+
+  &::placeholder {
+    color: rgba(51, 255, 51, 0.35);
+  }
+}
+
+// =====================
+// STATUS BAR (tmux style)
+// =====================
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 1rem;
+  background: rgba(28, 87, 46, 0.55);
+  border-top: 1px solid $term-border;
+  color: $term-green-soft;
+  font-size: 0.72rem;
+  user-select: none;
+  flex-shrink: 0;
+
+  .status-left,
+  .status-right {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .status-right {
+    overflow: hidden;
+  }
+
+  .status-session {
+    background: $term-green;
+    color: #000;
+    padding: 0 0.4rem;
+    font-weight: 700;
+  }
+}
+
+// =====================
+// CERT MODAL
+// =====================
+
 .cert-modal {
   display: none;
   position: fixed;
@@ -263,7 +635,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.75);
   cursor: pointer;
 }
 
@@ -285,24 +657,54 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   line-height: 1;
+  font-family: inherit;
 
   &:hover {
-    color: #33ff33;
+    color: $term-green;
   }
 }
 
 .cert-modal-image {
-  max-width: 45vw;
-  max-height: 40vh;
+  max-width: min(80vw, 700px);
+  max-height: 70vh;
   object-fit: contain;
-  // No filter - show natural colors
   filter: none;
+  border: 1px solid $term-border;
+  border-radius: 6px;
+  background: #000;
 }
 
-// Links
-a {
-  color: #33ff33;
-  text-decoration: none;
+// =====================
+// MATRIX RAIN CANVAS
+// =====================
+
+.matrix-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+// =====================
+// REDUCED MOTION
+// =====================
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor,
+  .cursor-final {
+    animation: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 
 // =====================
@@ -310,16 +712,25 @@ a {
 // =====================
 
 @include mediaMd {
+  body {
+    padding: 0.6rem;
+  }
+
   .terminal {
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1rem 1rem;
+    gap: 1.4rem;
+  }
+
+  .titlebar-size {
+    display: none;
   }
 
   .terminal-content {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
-  // Reorder: image first on mobile
+  // Image first on mobile
   .terminal-right {
     order: -1;
     align-items: center;
@@ -329,55 +740,49 @@ a {
     text-align: left;
   }
 
-  .terminal-name {
-    font-size: 2.5rem;
-
-    &.ascii-art {
-      font-size: 0.55rem;
-    }
-  }
-
-  .profile-image {
-    max-width: 220px;
+  .profile-image-container {
+    max-width: 200px;
   }
 
   .certifications {
     align-items: center;
-    margin-top: 1rem;
   }
 
-  .cert-label {
-    text-align: center;
+  .shell-output {
+    max-height: 32vh;
+  }
+
+  .status-bar {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+
+    .status-uptime {
+      display: none;
+    }
   }
 }
 
 @include mediaSm {
   .terminal {
-    padding: 1.5rem 1rem;
-  }
-
-  .terminal-name {
-    font-size: 2rem;
-
-    &.ascii-art {
-      font-size: 0.4rem;
-    }
+    padding: 1rem 0.75rem 0.75rem;
   }
 
   .terminal-title {
-    font-size: 1rem;
-  }
-
-  .skills-tags {
-    gap: 0.25rem;
-  }
-
-  .skill-tag {
     font-size: 0.9rem;
   }
 
-  .profile-image {
-    max-width: 180px;
+  .terminal-prompt,
+  .terminal-command {
+    font-size: 0.78rem;
+  }
+
+  .skill-tag,
+  .terminal-text {
+    font-size: 0.8rem;
+  }
+
+  .profile-image-container {
+    max-width: 170px;
   }
 
   .cert-badges img {
