@@ -23,16 +23,7 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
-    "alwaysStrict": true,
-
-    /* Path mappings */
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@styles/*": ["src/styles/*"],
-      "@types/*": ["src/types/*"]
-    }
+    "alwaysStrict": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

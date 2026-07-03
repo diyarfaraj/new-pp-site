@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script>document.documentElement.classList.add('js');</script>
 
     <!-- Primary Meta Tags -->
     <title>Diyar Faraj - Senior Backend & DevOps Engineer | .NET, Kubernetes, Azure DevOps</title>
@@ -13,6 +13,8 @@
     <meta name="author" content="Diyar Faraj" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
     <link rel="canonical" href="https://diyarfaraj.com/" />
 
     <!-- Open Graph / Facebook -->
@@ -20,9 +22,10 @@
     <meta property="og:url" content="https://diyarfaraj.com/" />
     <meta property="og:title" content="Diyar Faraj - Senior Backend & DevOps Engineer" />
     <meta property="og:description" content="Backend & DevOps engineer with 10 years experience in .NET, Linux, Kubernetes, and Azure DevOps CI/CD. Certified cloud architect specializing in micro-services and cloud infrastructure." />
-    <meta property="og:image" content="https://diyarfaraj.com/img/portrait.png" />
+    <meta property="og:image" content="https://diyarfaraj.com/img/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Terminal-style card: Diyar Faraj — Senior Backend, DevOps & Cloud Engineer" />
     <meta property="og:site_name" content="Diyar Faraj - Software Engineer" />
     <meta property="og:locale" content="en_US" />
 
@@ -31,15 +34,17 @@
     <meta name="twitter:url" content="https://diyarfaraj.com/" />
     <meta name="twitter:title" content="Diyar Faraj - Senior Backend & DevOps Engineer" />
     <meta name="twitter:description" content="Backend & DevOps engineer with 10 years experience in .NET, Linux, Kubernetes, and Azure DevOps CI/CD. Certified cloud architect." />
-    <meta name="twitter:image" content="https://diyarfaraj.com/img/portrait.png" />
+    <meta name="twitter:image" content="https://diyarfaraj.com/img/og-image.png" />
+    <meta name="twitter:image:alt" content="Terminal-style card: Diyar Faraj — Senior Backend, DevOps & Cloud Engineer" />
     <meta name="twitter:creator" content="@Diyarfaraj" />
     <meta name="twitter:site" content="@Diyarfaraj" />
 
-    <!-- Favicons -->
+    <!-- Favicons & Manifest -->
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
 
     <!-- Stylesheets -->
 
@@ -75,6 +80,7 @@
       ],
       "jobTitle": "Senior Backend & DevOps Engineer",
       "description": "Backend & DevOps engineer with 10 years industry experience specializing in .NET, Linux, Kubernetes, and Azure DevOps CI/CD.",
+      "email": "mailto:diyar.faraj@gmail.com",
       "knowsAbout": [
         ".NET",
         "C#",
@@ -157,23 +163,40 @@
         "@id": "https://diyarfaraj.com/#person"
       },
       "dateCreated": "2024-01-01",
-      "dateModified": "2026-01-17"
+      "dateModified": "2026-07-02"
     }
     </script>
-    <script type="module" crossorigin src="/assets/index-C4-DwNW1.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DFCJPxK-.css">
+    <script type="module" crossorigin src="/assets/index-BvVw0UBh.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Dg5SUBFh.css">
   </head>
 
   <body>
-    <main class="terminal" role="main">
-      <div class="terminal-content">
-        <!-- Left side: Terminal content -->
-        <div class="terminal-left">
-          <!-- Whoami section -->
-          <section class="terminal-section" aria-label="Introduction">
-            <p class="terminal-prompt">root@diyar-faraj:~$ whoami</p>
-            <h1 class="terminal-name ascii-art" aria-label="Diyar Faraj">
-<pre>
+    <div class="crt" aria-hidden="true"></div>
+
+    <main class="terminal-window">
+      <!-- Window title bar -->
+      <header class="terminal-titlebar" aria-hidden="true">
+        <span class="titlebar-dots">
+          <span class="dot dot-close"></span>
+          <span class="dot dot-min"></span>
+          <span class="dot dot-max"></span>
+        </span>
+        <span class="titlebar-title">diyar@portfolio: ~ — bash</span>
+        <span class="titlebar-size">80×24</span>
+      </header>
+
+      <div class="terminal">
+        <p class="terminal-lastlogin" id="lastLogin" aria-hidden="true">Last login: — from 10.0.0.42 on ttys001</p>
+
+        <div class="terminal-content">
+          <!-- Left side: Terminal content -->
+          <div class="terminal-left">
+            <!-- Whoami section -->
+            <section class="terminal-section" aria-label="Introduction">
+              <p class="terminal-prompt"><span class="p-user">diyar@portfolio</span>:<span class="p-path">~</span><span class="p-dollar">$</span> whoami</p>
+              <h1 class="terminal-name ascii-art">
+                <span class="sr-only">Diyar Faraj</span>
+<pre aria-hidden="true">
  ____  _                   _____                 _
 |  _ \(_)_   _  __ _ _ __ |  ___|_ _ _ __ __ _  (_)
 | | | | | | | |/ _` | '_ \| |_ / _` | '__/ _` | | |
@@ -181,114 +204,137 @@
 |____/|_|\__, |\__,_|_|   |_|  \__,_|_|  \__,_|_/ |
          |___/                               |__/
 </pre>
-            </h1>
-            <p class="terminal-title">Senior Backend, DevOps, & Cloud Engineer</p>
-          </section>
+              </h1>
+              <p class="terminal-title">Senior Backend, DevOps, &amp; Cloud Engineer</p>
+            </section>
 
-          <!-- Skills section -->
-          <section class="terminal-section typing-section" aria-label="Skills">
-            <p class="terminal-command"><span class="type-text" data-text="~$ ls skills/"></span><span class="cursor">|</span></p>
-            <div class="skills-tags typing-output">
-              <span class="skill-tag">[.NET]</span>
-              <span class="skill-tag">[Kubernetes]</span>
-              <span class="skill-tag">[Azure DevOps]</span>
-              <span class="skill-tag">[Linux]</span>
-            </div>
-          </section>
+            <!-- Skills section -->
+            <section class="terminal-section typing-section" aria-label="Skills">
+              <p class="terminal-command"><span class="p-user">diyar@portfolio</span>:<span class="p-path">~</span><span class="p-dollar">$</span> <span class="type-text" data-text="ls skills/"></span><span class="cursor" aria-hidden="true"></span></p>
+              <div class="skills-tags typing-output">
+                <span class="skill-tag">.NET</span>
+                <span class="skill-tag">C#</span>
+                <span class="skill-tag">Kubernetes</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Azure DevOps</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">CI/CD</span>
+                <span class="skill-tag">Micro-services</span>
+              </div>
+            </section>
 
-          <!-- Projects/README section -->
-          <section class="terminal-section typing-section" aria-label="About">
-            <p class="terminal-command"><span class="type-text" data-text="~$ cat projects/README.md"></span><span class="cursor">|</span></p>
-            <div class="typing-output">
-              <p class="terminal-text">Backend & DevOps engineer with 10 years industry experience specializing in .NET, Linux, Kubernetes, and Azure DevOps CI/CD.</p>
-              <p class="terminal-text">Hands-on experience with Linux migrations, managing micro-services, and cloud infrastructure. Certified within cloud and software architecture.</p>
-            </div>
-          </section>
+            <!-- Projects/README section -->
+            <section class="terminal-section typing-section" aria-label="About">
+              <p class="terminal-command"><span class="p-user">diyar@portfolio</span>:<span class="p-path">~</span><span class="p-dollar">$</span> <span class="type-text" data-text="cat README.md"></span><span class="cursor" aria-hidden="true"></span></p>
+              <div class="typing-output">
+                <p class="terminal-text">Backend &amp; DevOps engineer with 10 years industry experience specializing in .NET, Linux, Kubernetes, and Azure DevOps CI/CD.</p>
+                <p class="terminal-text">Hands-on experience with Linux migrations, managing micro-services, and cloud infrastructure. Certified within cloud and software architecture.</p>
+              </div>
+            </section>
 
-          <!-- Contact section -->
-          <section class="terminal-section typing-section" aria-label="Contact">
-            <p class="terminal-command"><span class="type-text" data-text="~$ ssh contact"></span><span class="cursor">|</span><span class="cursor-final">|</span></p>
-            <div class="contact-links typing-output">
-              <a href="https://www.linkedin.com/in/diyar-faraj/" target="_blank" rel="noopener noreferrer" class="contact-tag" aria-label="LinkedIn profile">[LinkedIn]</a>
-              <a href="https://github.com/diyarfaraj" target="_blank" rel="noopener noreferrer" class="contact-tag" aria-label="GitHub profile">[GitHub]</a>
-              <a href="mailto:diyar.faraj@gmail.com" class="contact-tag" aria-label="Email">[Email]</a>
+            <!-- Contact section -->
+            <section class="terminal-section typing-section" aria-label="Contact">
+              <p class="terminal-command"><span class="p-user">diyar@portfolio</span>:<span class="p-path">~</span><span class="p-dollar">$</span> <span class="type-text" data-text="ssh contact"></span><span class="cursor" aria-hidden="true"></span></p>
+              <div class="contact-links typing-output">
+                <a href="https://www.linkedin.com/in/diyar-faraj/" target="_blank" rel="noopener noreferrer" class="contact-tag" aria-label="LinkedIn profile">[LinkedIn]</a>
+                <a href="https://github.com/diyarfaraj" target="_blank" rel="noopener noreferrer" class="contact-tag" aria-label="GitHub profile">[GitHub]</a>
+                <a href="mailto:diyar.faraj@gmail.com" class="contact-tag" aria-label="Email">[Email]</a>
+              </div>
+            </section>
+          </div>
+
+          <!-- Right side: Image and certifications -->
+          <div class="terminal-right">
+            <div class="profile-image-container">
+              <img
+                src="/img/portrait.png"
+                alt="Diyar Faraj - Cloud Engineer"
+                class="profile-image"
+                width="300"
+                height="380"
+                loading="eager"
+                fetchpriority="high"
+              />
             </div>
-          </section>
+
+            <div class="certifications" aria-label="Certifications">
+              <div class="cert-badges">
+                <div class="cert-item" data-url="https://verified.sertifier.com/en/verify/24510104985669">
+                  <img src="/img/architect-cert.png" alt="Software Architecture Certificate" width="60" height="60" loading="lazy" />
+                  <div class="cert-actions">
+                    <button type="button" class="cert-action cert-view" aria-label="View Software Architecture Certificate">[view]</button>
+                    <button type="button" class="cert-action cert-visit" aria-label="Verify Software Architecture Certificate (external site)">[visit]</button>
+                  </div>
+                </div>
+                <div class="cert-item" data-url="https://www.credly.com/badges/749dd063-46a2-4626-964f-e14cc2bbf69d/public_url">
+                  <img src="/img/az900.png" alt="Microsoft Azure Fundamentals AZ-900" width="60" height="60" loading="lazy" />
+                  <div class="cert-actions">
+                    <button type="button" class="cert-action cert-view" aria-label="View Azure Fundamentals badge">[view]</button>
+                    <button type="button" class="cert-action cert-visit" aria-label="Verify Azure Fundamentals badge on Credly (external site)">[visit]</button>
+                  </div>
+                </div>
+                <div class="cert-item" data-url="https://www.credly.com/badges/2e3c2352-746a-4af1-a9b7-4c6c1701b5fa/public_url">
+                  <img src="/img/aws-practitioner.png" alt="AWS Certified Cloud Practitioner" width="60" height="60" loading="lazy" />
+                  <div class="cert-actions">
+                    <button type="button" class="cert-action cert-view" aria-label="View AWS Cloud Practitioner badge">[view]</button>
+                    <button type="button" class="cert-action cert-visit" aria-label="Verify AWS Cloud Practitioner badge on Credly (external site)">[visit]</button>
+                  </div>
+                </div>
+                <div class="cert-item" data-url="https://www.credly.com/badges/a57d2d60-3b88-4654-9e81-ed9c2ffc3117">
+                  <img src="/img/azure-ai900.png" alt="Microsoft Azure AI Fundamentals AI-900" width="60" height="60" loading="lazy" />
+                  <div class="cert-actions">
+                    <button type="button" class="cert-action cert-view" aria-label="View Azure AI Fundamentals badge">[view]</button>
+                    <button type="button" class="cert-action cert-visit" aria-label="Verify Azure AI Fundamentals badge on Credly (external site)">[visit]</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Right side: Image and certifications -->
-        <div class="terminal-right">
-          <div class="profile-image-container">
-            <img
-              src="/img/portrait.png"
-              alt="Diyar Faraj - Cloud Engineer"
-              class="profile-image"
-              width="300"
-              height="380"
-              loading="eager"
+        <!-- Interactive shell -->
+        <section class="terminal-section shell-section" aria-label="Interactive terminal">
+          <p class="shell-hint">// this terminal is real — type <b>help</b> to explore, <b>neofetch</b> for stats, ↑↓ for history, Tab to complete</p>
+          <div class="shell-output" id="shellOutput" role="log" aria-live="polite"></div>
+          <div class="shell-input-line">
+            <label for="shellInput" class="shell-prompt"><span class="p-user">visitor@portfolio</span>:<span class="p-path">~</span><span class="p-dollar">$</span></label>
+            <input
+              id="shellInput"
+              class="shell-input"
+              type="text"
+              autocomplete="off"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="send"
+              aria-label="Terminal command input. Type help and press Enter to list commands."
             />
           </div>
-
-          <div class="certifications" aria-label="Certifications">
-            <div class="cert-badges">
-              <div class="cert-item" data-url="https://verified.sertifier.com/en/verify/24510104985669">
-                <img src="/img/architect-cert.png" alt="Software Architecture Certificate" width="60" height="60" loading="lazy" />
-                <div class="cert-actions">
-                  <span class="cert-action cert-view">[view]</span>
-                  <span class="cert-action cert-visit">[visit]</span>
-                </div>
-              </div>
-              <div class="cert-item" data-url="https://www.credly.com/badges/749dd063-46a2-4626-964f-e14cc2bbf69d/public_url">
-                <img src="/img/az900.png" alt="Azure Fundamentals" width="60" height="60" loading="lazy" />
-                <div class="cert-actions">
-                  <span class="cert-action cert-view">[view]</span>
-                  <span class="cert-action cert-visit">[visit]</span>
-                </div>
-              </div>
-              <div class="cert-item" data-url="https://www.credly.com/badges/2e3c2352-746a-4af1-a9b7-4c6c1701b5fa/public_url">
-                <img src="/img/aws-practitioner.png" alt="AWS Cloud Practitioner" width="60" height="60" loading="lazy" />
-                <div class="cert-actions">
-                  <span class="cert-action cert-view">[view]</span>
-                  <span class="cert-action cert-visit">[visit]</span>
-                </div>
-              </div>
-              <div class="cert-item" data-url="https://www.credly.com/badges/a57d2d60-3b88-4654-9e81-ed9c2ffc3117">
-                <img src="/img/azure-ai900.png" alt="Azure AI Fundamentals" width="60" height="60" loading="lazy" />
-                <div class="cert-actions">
-                  <span class="cert-action cert-view">[view]</span>
-                  <span class="cert-action cert-visit">[visit]</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
 
+      <!-- tmux-style status bar -->
+      <footer class="status-bar" aria-label="Status bar">
+        <span class="status-left">
+          <span class="status-session">[0] portfolio</span>
+          <span>0: bash*</span>
+        </span>
+        <span class="status-right">
+          <span class="status-uptime">uptime: 10+ yrs in prod</span>
+          <span id="statusClock">--:--</span>
+          <span>diyarfaraj.com</span>
+        </span>
+      </footer>
     </main>
 
     <!-- Certificate Modal -->
-    <div class="cert-modal" id="certModal">
+    <div class="cert-modal" id="certModal" role="dialog" aria-modal="true" aria-label="Certificate preview">
       <div class="cert-modal-backdrop"></div>
       <div class="cert-modal-content">
         <button class="cert-modal-close" aria-label="Close">&times;</button>
         <img class="cert-modal-image" id="certModalImage" src="" alt="" />
       </div>
     </div>
-
-    <!-- Screen reader only class for accessibility -->
-    <style>
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0,0,0,0);
-        white-space: nowrap;
-        border: 0;
-      }
-    </style>
 
   </body>
 </html>
