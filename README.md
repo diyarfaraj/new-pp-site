@@ -1,11 +1,12 @@
 # new-pp-site
 
-## To run locally:
+Portfolio for diyarfaraj.com. One static page, Vite + SCSS.
+
+## Run locally
 
 - npm install
 - npm run dev
 
-## Publish changes:
+## Publish
 
-- npm run deploy
-- go to setting>pages > "custom domains" field > add diyarfaraj.com to pages
+- npm run deploy (the custom domain comes from public/CNAME)
