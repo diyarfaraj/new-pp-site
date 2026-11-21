@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal portfolio for Diyar Faraj (diyarfaraj.com). It is one static page in a Matrix-style terminal look: green (#33ff33) on black, monospace, a `whoami` ASCII banner, a few prompt-headed sections, the portrait and four certification badges. No JavaScript, no animation, no runtime dependencies. Built with Vite and SCSS.
 
-The message leads with agentic development (agent-first workflows, a software factory around the code, AI in production, legacy modernisation) and keeps the classic backend, .NET, Kubernetes, Linux and DevOps work.
+The message leads with agentic development (agentic-first workflows, a software factory around the code, AI in production, legacy modernisation) and keeps the classic backend, .NET, Kubernetes, Linux and DevOps work.
 
 ## Commands
 
