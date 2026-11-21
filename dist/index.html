@@ -165,7 +165,7 @@
       "dateModified": "2026-11-21"
     }
     </script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DQjB5ivM.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-DzgVdgRo.css">
   </head>
 
   <body>
@@ -245,19 +245,63 @@
 
         <aside class="col-side" aria-label="Portrait and certifications">
           <div class="portrait-frame"><img src="/img/portrait.png" alt="Diyar Faraj" class="portrait" width="300" height="380" loading="eager" fetchpriority="high" /></div>
-          <div class="certs">
-            <a class="cert" href="https://verified.sertifier.com/en/verify/24510104985669" target="_blank" rel="noopener noreferrer" aria-label="Verify: Software Architecture Certificate (external site)">
-              <img src="/img/architect-cert.png" alt="Software Architecture Certificate" width="60" height="60" loading="lazy" />
-            </a>
-            <a class="cert" href="https://www.credly.com/badges/749dd063-46a2-4626-964f-e14cc2bbf69d/public_url" target="_blank" rel="noopener noreferrer" aria-label="Verify: Microsoft Azure Fundamentals AZ-900 (external site)">
-              <img src="/img/az900.png" alt="Microsoft Azure Fundamentals AZ-900" width="60" height="60" loading="lazy" />
-            </a>
-            <a class="cert" href="https://www.credly.com/badges/2e3c2352-746a-4af1-a9b7-4c6c1701b5fa/public_url" target="_blank" rel="noopener noreferrer" aria-label="Verify: AWS Certified Cloud Practitioner (external site)">
-              <img src="/img/aws-practitioner.png" alt="AWS Certified Cloud Practitioner" width="60" height="60" loading="lazy" />
-            </a>
-            <a class="cert" href="https://www.credly.com/badges/a57d2d60-3b88-4654-9e81-ed9c2ffc3117" target="_blank" rel="noopener noreferrer" aria-label="Verify: Microsoft Azure AI Fundamentals AI-900 (external site)">
-              <img src="/img/azure-ai900.png" alt="Microsoft Azure AI Fundamentals AI-900" width="60" height="60" loading="lazy" />
-            </a>
+          <div class="certs" id="certs">
+            <div class="cert-item">
+              <div class="cert"><img src="/img/architect-cert.png" alt="Software Architecture Certificate" width="60" height="60" loading="lazy" /></div>
+              <div class="cert-actions">
+                <a class="cert-action" href="#cert-1" aria-label="View Software Architecture Certificate">[view]</a>
+                <a class="cert-action" href="https://verified.sertifier.com/en/verify/24510104985669" target="_blank" rel="noopener noreferrer" aria-label="Verify Software Architecture Certificate (external site)">[visit]</a>
+              </div>
+            </div>
+            <div class="cert-item">
+              <div class="cert"><img src="/img/az900.png" alt="Microsoft Azure Fundamentals AZ-900" width="60" height="60" loading="lazy" /></div>
+              <div class="cert-actions">
+                <a class="cert-action" href="#cert-2" aria-label="View Microsoft Azure Fundamentals AZ-900">[view]</a>
+                <a class="cert-action" href="https://www.credly.com/badges/749dd063-46a2-4626-964f-e14cc2bbf69d/public_url" target="_blank" rel="noopener noreferrer" aria-label="Verify Microsoft Azure Fundamentals AZ-900 (external site)">[visit]</a>
+              </div>
+            </div>
+            <div class="cert-item">
+              <div class="cert"><img src="/img/aws-practitioner.png" alt="AWS Certified Cloud Practitioner" width="60" height="60" loading="lazy" /></div>
+              <div class="cert-actions">
+                <a class="cert-action" href="#cert-3" aria-label="View AWS Certified Cloud Practitioner">[view]</a>
+                <a class="cert-action" href="https://www.credly.com/badges/2e3c2352-746a-4af1-a9b7-4c6c1701b5fa/public_url" target="_blank" rel="noopener noreferrer" aria-label="Verify AWS Certified Cloud Practitioner (external site)">[visit]</a>
+              </div>
+            </div>
+            <div class="cert-item">
+              <div class="cert"><img src="/img/azure-ai900.png" alt="Microsoft Azure AI Fundamentals AI-900" width="60" height="60" loading="lazy" /></div>
+              <div class="cert-actions">
+                <a class="cert-action" href="#cert-4" aria-label="View Microsoft Azure AI Fundamentals AI-900">[view]</a>
+                <a class="cert-action" href="https://www.credly.com/badges/a57d2d60-3b88-4654-9e81-ed9c2ffc3117" target="_blank" rel="noopener noreferrer" aria-label="Verify Microsoft Azure AI Fundamentals AI-900 (external site)">[visit]</a>
+              </div>
+            </div>
+          </div>
+          <div class="cert-modal" id="cert-1" role="dialog" aria-label="Software Architecture Certificate">
+            <a class="cert-modal-backdrop" href="#certs" aria-label="Close"></a>
+            <div class="cert-modal-content">
+              <a class="cert-modal-close" href="#certs" aria-label="Close">&times;</a>
+              <img class="cert-modal-image" src="/img/architect-cert.png" alt="Software Architecture Certificate" />
+            </div>
+          </div>
+          <div class="cert-modal" id="cert-2" role="dialog" aria-label="Microsoft Azure Fundamentals AZ-900">
+            <a class="cert-modal-backdrop" href="#certs" aria-label="Close"></a>
+            <div class="cert-modal-content">
+              <a class="cert-modal-close" href="#certs" aria-label="Close">&times;</a>
+              <img class="cert-modal-image" src="/img/az900.png" alt="Microsoft Azure Fundamentals AZ-900" />
+            </div>
+          </div>
+          <div class="cert-modal" id="cert-3" role="dialog" aria-label="AWS Certified Cloud Practitioner">
+            <a class="cert-modal-backdrop" href="#certs" aria-label="Close"></a>
+            <div class="cert-modal-content">
+              <a class="cert-modal-close" href="#certs" aria-label="Close">&times;</a>
+              <img class="cert-modal-image" src="/img/aws-practitioner.png" alt="AWS Certified Cloud Practitioner" />
+            </div>
+          </div>
+          <div class="cert-modal" id="cert-4" role="dialog" aria-label="Microsoft Azure AI Fundamentals AI-900">
+            <a class="cert-modal-backdrop" href="#certs" aria-label="Close"></a>
+            <div class="cert-modal-content">
+              <a class="cert-modal-close" href="#certs" aria-label="Close">&times;</a>
+              <img class="cert-modal-image" src="/img/azure-ai900.png" alt="Microsoft Azure AI Fundamentals AI-900" />
+            </div>
           </div>
         </aside>
       </div>
