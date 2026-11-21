@@ -155,12 +155,47 @@ a {
   }
 }
 
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 1px solid $term-border;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: #000;
+
+  // Green overlay turns the grayscale photo into a green duotone
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: $term-green;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  // Scanlines
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.18) 3px
+    );
+  }
+}
+
 .portrait {
   display: block;
   width: 100%;
-  height: auto;
-  border: 1px solid $term-border;
-  margin-bottom: 1rem;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  filter: grayscale(1) contrast(1.15) brightness(0.9);
 }
 
 .certs {
