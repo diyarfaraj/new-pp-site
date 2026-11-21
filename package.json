@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "diyar faraj official",
   "main": "index.js",
-  "homepage": "https://diyarfaraj.github.io/new-pp-site",
+  "homepage": "https://diyarfaraj.com",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist"
   },

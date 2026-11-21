@@ -4,81 +4,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio website for Diyar Faraj, a Senior Backend, DevOps & Cloud Engineer. It's a static site built with Vite, TypeScript, and SCSS — zero runtime dependencies. The site is styled as an authentic Linux terminal emulator: window chrome with title bar, bash-colored prompts, a typing intro, a fully interactive shell (with easter eggs), CRT scanline/glow effects, and a tmux-style status bar.
+Personal portfolio for Diyar Faraj (diyarfaraj.com). It is one static page in a Matrix-style terminal look: green (#33ff33) on black, monospace, a `whoami` ASCII banner, a few prompt-headed sections, the portrait and four certification badges. No JavaScript, no animation, no runtime dependencies. Built with Vite and SCSS.
 
-**SEO Optimized**: comprehensive meta tags, Open Graph (with a generated 1200×630 og-image), Twitter Cards, Schema.org JSON-LD (Person, WebSite, ProfilePage), sitemap.xml, robots.txt, and web manifest.
+The message leads with agentic development (agentic-first workflows, a software factory around the code, AI in production, legacy modernisation) and keeps the classic backend, .NET, Kubernetes, Linux and DevOps work.
 
-## Development Commands
+## Commands
 
 ```bash
 npm install        # install dependencies
 npm run dev        # Vite dev server on http://localhost:3080
-npm run build      # tsc type-check + vite build → dist/
+npm run build      # vite build -> dist/
 npm run preview    # preview the production build
 npm run deploy     # build + publish dist/ to GitHub Pages (gh-pages branch)
 ```
 
-After deployment, the custom domain (diyarfaraj.com) may need to be re-configured in GitHub repository settings (Settings > Pages > Custom domain).
+`public/CNAME` (diyarfaraj.com) is copied into `dist/`, so the custom domain survives deploys. `dist/` is committed.
 
-## Project Architecture
+## Structure
 
-### Directory Structure
-- `src/` — source files (Vite root)
-  - `index.html` — the page (SEO head + terminal markup)
-  - `main.ts` — all behavior (typing intro, interactive shell, modal, effects)
-  - `styles/man.scss` — main stylesheet entry
-  - `styles/_config.scss` — palette variables and media-query/motion mixins
-- `public/` — static assets copied verbatim into the build
-  - `img/` — portrait, certification badges, `og-image.png` (social preview)
-  - `favicon/` — favicons + `site.webmanifest`
-  - `sitemap.xml`, `robots.txt`
-- `dist/` — production build output (committed; deployed to GitHub Pages)
+- `src/index.html` is the whole page: SEO head (meta, Open Graph, Twitter, JSON-LD Person/WebSite/ProfilePage) and the body.
+- `src/styles/man.scss` is the stylesheet. `src/styles/_config.scss` holds the palette and the media-query mixins.
+- `public/img/` has the portrait, the certification badges and `og-image.png` (1200x630).
+- `public/sitemap.xml`, `public/robots.txt`, `public/favicon/`, `public/CNAME`.
 
-Legacy note: the root `scss/` folder is a leftover from the pre-Vite site; the live styles are in `src/styles/`.
+## Content rules
 
-### TypeScript Architecture (`src/main.ts`)
-
-Vanilla TS classes, no frameworks:
-
-1. **TerminalTyping** — types each section's command then reveals its output. Skippable via any click/keypress; with `prefers-reduced-motion` everything renders instantly.
-2. **Shell** — the interactive prompt at the bottom. Commands: `help`, `whoami`, `about`, `skills`, `certs`, `contact`, `neofetch`, `ls`, `pwd`, `date`, `uname`, `echo`, `history`, `clear`, `matrix`, `exit`, plus easter eggs (`sudo`, `rm`, `vim`, Ctrl+L, Ctrl+C). Supports ↑/↓ history and Tab completion. All user input is HTML-escaped before printing.
-3. **MatrixRain** — canvas-based falling-glyph effect triggered by the `matrix` command (time-boxed, motion-safe).
-4. **CertModal** — certificate [view]/[visit] actions with Escape-to-close and focus restore.
-5. **CertGlitch** — random hue-glitch filter on badge hover (per-image intervals, disabled under reduced motion).
-
-Content visibility rule: `.typing-output` is only hidden when `html.js` is set (inline script in `<head>`), so crawlers and no-JS users see all content.
-
-### Styling Theme
-
-Linux terminal / CRT aesthetic, defined in `src/styles/_config.scss`:
-- Terminal green `#33ff33` on black, body text `#d0d0d0`, path blue `#57c7ff`
-- Font: Courier New monospace
-- Terminal window chrome (title bar, dots, 80×24 badge), tmux-style status bar
-- CRT overlay: scanlines + vignette + subtle flicker (flicker only under `prefers-reduced-motion: no-preference`)
-- ASCII figlet name banner scales with `clamp()` so it never overflows on mobile
-
-When modifying styles, edit `src/styles/*.scss`; Vite compiles them.
-
-### Responsive Design
-
-Breakpoint mixins in `_config.scss`: `mediaSm` (≤500px), `mediaMd` (≤768px), `mediaLg`, `mediaXl`. On mobile the layout stacks (portrait first), cert actions are always visible (no hover on touch), and the shell input uses a 16px floor to prevent iOS zoom-on-focus.
-
-## SEO & Performance
-
-- og-image: `public/img/og-image.png` (1200×630, terminal-style card). Regenerate by rendering an HTML card at 1200×630 with headless Chromium if the branding changes.
-- JSON-LD: Person (with credentials), WebSite, ProfilePage — keep in sync with visible content.
-- Update `<lastmod>` in `public/sitemap.xml` and `dateModified` in the ProfilePage schema when content changes.
-- All images have alt text and width/height; portrait uses `loading="eager" fetchpriority="high"`, badges lazy-load.
-
-## Accessibility
-
-- Real `<button>` elements for cert actions with descriptive aria-labels
-- `h1` contains sr-only "Diyar Faraj" text; the ASCII banner is `aria-hidden`
-- Shell output is `role="log" aria-live="polite"`; decorative chrome is `aria-hidden`
-- `:focus-visible` outlines, `prefers-reduced-motion` respected everywhere
-
-## Security
-
-- Zero runtime dependencies (no jQuery/React)
-- `rel="noopener noreferrer"` on all external links
-- Shell echoes are HTML-escaped (`escapeHtml`) to prevent DOM injection
+- Keep the JSON-LD in sync with the visible text. When content changes, update `<lastmod>` in `public/sitemap.xml` and `dateModified` in the ProfilePage block.
+- Regenerate `public/img/og-image.png` if the headline changes: render an HTML card at 1200x630 with headless Chrome (`--screenshot`).
+- Copy style: short, concrete sentences. No em-dashes. Avoid the words robust, seamless, leverage, passionate, end-to-end and production-grade.
+- Do not name the Emerson product. Write "industrial monitoring platform". Saaty and Kraftsmedjan are CodeCentra's products.
+- External links use `rel="noopener noreferrer"`. Images have alt text and width/height.
+- Keep `:focus-visible` outlines and the mobile layout (single column at 768px and below).

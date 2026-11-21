@@ -3,13 +3,13 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://diyarfaraj.com/</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://diyarfaraj.com/img/portrait.png</image:loc>
-      <image:title>Diyar Faraj - Senior Backend and DevOps Engineer</image:title>
-      <image:caption>Professional portrait of Diyar Faraj, Backend and DevOps Engineer with 10 years experience</image:caption>
+      <image:title>Diyar Faraj - Agentic development, backend and DevOps</image:title>
+      <image:caption>Portrait of Diyar Faraj</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://diyarfaraj.com/img/az900.png</image:loc>

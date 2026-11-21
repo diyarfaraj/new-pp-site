@@ -1,30 +1,19 @@
-@use "sass:color";
 @use "config" as *;
 
-// Reset
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html,
 body {
-  height: 100%;
-}
-
-body {
-  background: radial-gradient(ellipse at 50% 40%, #041004 0%, #000 70%);
-  background-color: $term-bg;
+  background: $term-bg;
   color: $term-green;
   font-family: $term-font;
   line-height: 1.6;
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  padding: 1.25rem;
+  padding: 2rem 1.25rem 3rem;
 }
 
 ::selection {
@@ -32,32 +21,16 @@ body {
   color: #000;
 }
 
-// Themed scrollbars
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(51, 255, 51, 0.4) transparent;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(51, 255, 51, 0.35);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 a {
   color: $term-green;
   text-decoration: none;
+
+  &:hover {
+    color: $term-green-soft;
+    text-decoration: underline;
+  }
 }
 
-// Keyboard focus — visible, terminal-flavored
 :focus-visible {
   outline: 1px dashed $term-green;
   outline-offset: 3px;
@@ -75,344 +48,267 @@ a {
   border: 0;
 }
 
-// =====================
-// CRT OVERLAY
-// =====================
+.page {
+  max-width: 62rem;
+  margin: 0 auto;
+}
 
-.crt {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-  // Scanlines
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0px,
-    rgba(0, 0, 0, 0) 2px,
-    rgba(0, 0, 0, 0.18) 3px
-  );
+.prompt {
+  display: none; // fake shell prompts are hidden on purpose
+  color: $term-text;
+  margin-bottom: 0.5rem;
 
-  // Vignette
+  .u {
+    color: $term-green;
+  }
+
+  .p {
+    color: $term-blue;
+  }
+}
+
+.intro {
+  margin-bottom: 2.5rem;
+}
+
+.name pre {
+  color: $term-green;
+  font-family: $term-font;
+  font-size: clamp(0.5rem, 2.3vw, 1.1rem);
+  line-height: 1.15;
+  overflow: hidden;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.role {
+  color: $term-text;
+  font-size: 1.05rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 17rem;
+  gap: 3rem;
+  align-items: start;
+
+  @include mediaMd {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.col-main section {
+  margin-bottom: 2rem;
+}
+
+.text {
+  color: $term-text;
+  margin-bottom: 0.75rem;
+  max-width: 44rem;
+}
+
+.list {
+  list-style: none;
+  color: $term-text;
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  li::before {
+    content: "> ";
+    color: $term-green;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.dim {
+  color: $term-dim;
+  margin-left: 0.4rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  border: 1px solid $term-border;
+  color: $term-green;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.link:hover {
+  background: $term-green;
+  color: #000;
+  text-decoration: none;
+}
+
+.col-side {
+  @include mediaMd {
+    order: -1;
+    max-width: 17rem;
+  }
+}
+
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 1px solid $term-border;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: #000;
+
+  // Green overlay turns the grayscale photo into a green duotone
   &::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.45) 100%);
+    background: $term-green;
+    mix-blend-mode: multiply;
+    pointer-events: none;
   }
 
-  @include motionSafe {
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(18, 60, 18, 0.03);
-      animation: crt-flicker 4s infinite;
-    }
-  }
-}
-
-@keyframes crt-flicker {
-  0%, 100% { opacity: 0.9; }
-  8% { opacity: 0.6; }
-  9% { opacity: 0.9; }
-  42% { opacity: 0.8; }
-  43% { opacity: 1; }
-  71% { opacity: 0.7; }
-  72% { opacity: 0.95; }
-}
-
-// =====================
-// TERMINAL WINDOW
-// =====================
-
-.terminal-window {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1160px;
-  border: 1px solid $term-border;
-  border-radius: 10px;
-  background: $term-bg-glass;
-  box-shadow:
-    0 0 60px rgba(51, 255, 51, 0.12),
-    0 0 12px rgba(51, 255, 51, 0.08),
-    inset 0 0 120px rgba(0, 30, 0, 0.35);
-  overflow: hidden;
-}
-
-.terminal-titlebar {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.55rem 1rem;
-  border-bottom: 1px solid $term-border;
-  background: rgba(10, 25, 10, 0.6);
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.titlebar-dots {
-  display: flex;
-  gap: 0.45rem;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-
-  &.dot-close { background: $term-red; }
-  &.dot-min { background: $term-amber; }
-  &.dot-max { background: $term-green; }
-}
-
-.titlebar-title {
-  flex: 1;
-  text-align: center;
-  color: $term-dim;
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.titlebar-size {
-  color: $term-dim;
-  font-size: 0.75rem;
-}
-
-// =====================
-// TERMINAL BODY
-// =====================
-
-.terminal {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 1.75rem 2.5rem 1.25rem;
-  gap: 1.75rem;
-}
-
-.terminal-lastlogin {
-  color: $term-dim;
-  font-size: 0.78rem;
-}
-
-// Two Column Layout
-.terminal-content {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 3rem;
-  align-items: start;
-}
-
-.terminal-left {
-  display: flex;
-  flex-direction: column;
-  gap: 1.9rem;
-  min-width: 0;
-}
-
-.terminal-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-// Prompts and commands — bash-style coloring
-.terminal-prompt,
-.terminal-command {
-  color: $term-text;
-  font-size: 0.85rem;
-  margin-bottom: 0.15rem;
-  word-break: break-word;
-}
-
-.p-user {
-  color: $term-green;
-  font-weight: 700;
-}
-
-.p-path {
-  color: $term-blue;
-  font-weight: 700;
-}
-
-.p-dollar {
-  color: $term-text;
-}
-
-// Name - ASCII banner
-.terminal-name {
-  color: $term-green;
-  text-shadow: 0 0 10px rgba(51, 255, 51, 0.5);
-  line-height: 1.2;
-  font-weight: 400;
-
-  &.ascii-art pre {
-    margin: 0;
-    font-family: $term-font;
-    white-space: pre;
-    // 52-char banner: scale with viewport, never overflow
-    font-size: clamp(5.5px, calc((100vw - 4rem) / 34), 11px);
-    line-height: 1.15;
-
-    @media screen and (min-width: 1240px) {
-      font-size: 11px;
-    }
-  }
-}
-
-// Title under name
-.terminal-title {
-  font-size: 0.95rem;
-  color: $term-text;
-  margin-top: 0.35rem;
-
+  // Scanlines
   &::before {
-    content: "▸ ";
-    color: $term-green;
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.18) 3px
+    );
   }
 }
 
-// Skills Tags
-.skills-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.6rem;
+// Faint, jittery scan band over the portrait (motion-safe)
+.scan {
+  display: none;
 }
 
-.skill-tag {
-  color: $term-text;
-  font-size: 0.85rem;
-  border: 1px solid rgba(51, 255, 51, 0.2);
-  padding: 0.05rem 0.45rem;
-  border-radius: 3px;
-  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+@include motionSafe {
+  .scan {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 10%;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(51, 255, 51, 0) 0%,
+      rgba(51, 255, 51, 0.025) 60%,
+      rgba(120, 255, 120, 0.025) 100%
+    );
+    transform: translateY(-100%);
+    // Moves in steps, so it looks like a glitchy refresh rather than a smooth glide
+    animation: portrait-scan 6s steps(26, end) infinite, scan-shake 0.35s steps(1, end) infinite;
+  }
 
-  &:hover {
-    color: $term-green;
-    border-color: rgba(51, 255, 51, 0.6);
-    box-shadow: 0 0 8px rgba(51, 255, 51, 0.25);
+  .portrait {
+    animation: portrait-shake 6s steps(1, end) infinite;
   }
 }
 
-// Terminal Text (README content)
-.terminal-text {
-  color: $term-text;
-  font-size: 0.85rem;
-  line-height: 1.55;
-  max-width: 62ch;
-
-  + .terminal-text {
-    margin-top: 0.4rem;
-  }
+@keyframes portrait-scan {
+  0% { transform: translateY(-100%); opacity: 1; }
+  75% { transform: translateY(700%); opacity: 1; }
+  100% { transform: translateY(700%); opacity: 0; }
 }
 
-// Contact Links
-.contact-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0.9rem;
+// Sideways jitter of the band
+@keyframes scan-shake {
+  0% { margin-left: 0; }
+  25% { margin-left: -1px; }
+  50% { margin-left: 1px; }
+  75% { margin-left: -1px; }
 }
 
-.contact-tag {
-  color: $term-text;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
-
-  &::before {
-    content: "→ ";
-    color: $term-green;
-    opacity: 0;
-    margin-left: -1.1em;
-    transition: opacity 0.2s ease;
-  }
-
-  &:hover,
-  &:focus-visible {
-    color: $term-green;
-    text-shadow: 0 0 8px rgba(51, 255, 51, 0.6);
-
-    &::before {
-      opacity: 1;
-    }
-  }
+// The photo itself twitches by a pixel or two a few times per loop
+@keyframes portrait-shake {
+  0%, 100% { transform: none; }
+  12% { transform: translateX(-1px); }
+  13% { transform: none; }
+  38% { transform: translateX(1px); }
+  39% { transform: none; }
+  64% { transform: translateX(-1px); }
+  65% { transform: none; }
 }
 
-// =====================
-// RIGHT COLUMN
-// =====================
-
-.terminal-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 1.5rem;
-}
-
-.profile-image-container {
-  position: relative;
-  overflow: hidden;
-  max-width: 180px;
-  border: 1px solid rgba(51, 255, 51, 0.2);
-  border-radius: 4px;
-}
-
-.profile-image {
+.portrait {
   display: block;
   width: 100%;
-  height: auto;
-  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.7) contrast(1.2);
-  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-  transform: scale(1.6);
-  transform-origin: center 20%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  filter: grayscale(1) contrast(1.15) brightness(0.9);
 }
 
-// Certifications
-.certifications {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
-}
-
-.cert-badges {
-  display: flex;
-  flex-wrap: wrap;
+.certs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
-  align-items: flex-start;
-  justify-content: flex-end;
 }
+
+$cert-filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.9) contrast(1.2);
 
 .cert-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
+  min-width: 0;
+}
+
+.cert {
+  display: block;
+  width: 100%;
+  border: 1px solid $term-border;
+  padding: 0.3rem;
 
   img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(1.5) brightness(0.9) contrast(1.2);
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: $cert-filter;
     transition: transform 0.3s ease;
-  }
-
-  &:hover img {
-    transform: scale(1.1);
   }
 }
 
+.cert-item:hover,
+.cert-item:focus-within {
+  .cert {
+    border-color: $term-green;
+  }
+
+  .cert img {
+    transform: scale(1.1);
+  }
+
+  // Random green glitch flicker (CSS only, motion-safe)
+  @include motionSafe {
+    .cert img {
+      animation: cert-glitch 0.9s steps(1, end) infinite;
+    }
+  }
+}
+
+// [view] [visit] show on hover or focus, always on touch screens
 .cert-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -423,7 +319,6 @@ a {
     visibility: visible;
   }
 
-  // Touch devices: no hover — keep actions visible
   @media (hover: none) {
     opacity: 1;
     visibility: visible;
@@ -431,362 +326,85 @@ a {
 }
 
 .cert-action {
-  background: none;
-  border: none;
-  font-family: inherit;
   color: $term-green;
   font-size: 0.75rem;
-  cursor: pointer;
-  transition: color 0.2s ease;
   padding: 0.1rem 0.2rem;
 
   &:hover {
     color: $term-green-soft;
     text-shadow: 0 0 5px rgba(51, 255, 51, 0.5);
+    text-decoration: none;
   }
 }
 
-// =====================
-// CURSORS
-// =====================
-
-// Block cursor (authentic terminal look)
-.cursor,
-.cursor-final {
-  display: inline-block;
-  width: 0.6em;
-  height: 1.05em;
-  margin-left: 2px;
-  background: $term-green;
-  color: transparent;
-  vertical-align: text-bottom;
-  animation: blink 1s step-end infinite;
-}
-
-.cursor-final {
-  display: none;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-// Typing output — hidden only when JS is running the animation.
-// Without JS (crawlers, no-script), everything stays visible.
-html.js .typing-output {
-  opacity: 0;
-  visibility: hidden;
-}
-
-// =====================
-// INTERACTIVE SHELL
-// =====================
-
-.shell-section {
-  margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px dashed rgba(51, 255, 51, 0.15);
-}
-
-html.js .shell-section {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease;
-
-  &.shell-ready {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-.shell-hint {
-  color: $term-dim;
-  font-size: 0.75rem;
-  margin-bottom: 0.35rem;
-
-  b {
-    color: $term-green;
-    font-weight: 700;
-  }
-}
-
-.shell-output {
-  font-size: 0.85rem;
-  color: $term-text;
-  max-height: 40vh;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-
-  pre {
-    font-family: $term-font;
-    white-space: pre-wrap;
-    word-break: break-word;
-    margin: 0 0 0.35rem;
-    line-height: 1.45;
-  }
-
-  .out-green { color: $term-green; }
-  .out-dim { color: $term-dim; }
-  .out-blue { color: $term-blue; }
-  .out-amber { color: $term-amber; }
-  .out-red { color: $term-red; }
-
-  a {
-    color: $term-blue;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-
-    &:hover {
-      color: $term-green;
-    }
-  }
-}
-
-.shell-input-line {
-  display: flex;
-  align-items: baseline;
-  gap: 0.45rem;
-  font-size: 0.85rem;
-}
-
-.shell-prompt {
-  white-space: nowrap;
-  color: $term-text;
-  cursor: text;
-}
-
-.shell-input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: $term-green;
-  font-family: $term-font;
-  font-size: max(0.85rem, 16px); // 16px floor prevents iOS zoom-on-focus
-  caret-color: $term-green;
-
-  &::placeholder {
-    color: rgba(51, 255, 51, 0.35);
-  }
-}
-
-// =====================
-// STATUS BAR (tmux style)
-// =====================
-
-.status-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.3rem 1rem;
-  background: rgba(28, 87, 46, 0.55);
-  border-top: 1px solid $term-border;
-  color: $term-green-soft;
-  font-size: 0.72rem;
-  user-select: none;
-  flex-shrink: 0;
-
-  .status-left,
-  .status-right {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    white-space: nowrap;
-  }
-
-  .status-right {
-    overflow: hidden;
-  }
-
-  .status-session {
-    background: $term-green;
-    color: #000;
-    padding: 0 0.4rem;
-    font-weight: 700;
-  }
-}
-
-// =====================
-// CERT MODAL
-// =====================
-
+// Lightbox opened with :target, no JavaScript
 .cert-modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 1000;
   align-items: center;
   justify-content: center;
 
-  &.active {
+  &:target {
     display: flex;
   }
 }
 
 .cert-modal-backdrop {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  cursor: pointer;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .cert-modal-content {
   position: relative;
-  z-index: 1;
-  max-width: 90vw;
-  max-height: 90vh;
 }
 
 .cert-modal-close {
   position: absolute;
-  top: -40px;
+  top: -2.5rem;
   right: 0;
-  background: none;
-  border: none;
   color: #fff;
   font-size: 2rem;
-  cursor: pointer;
-  padding: 0.5rem;
   line-height: 1;
-  font-family: inherit;
+  padding: 0.25rem 0.5rem;
 
   &:hover {
     color: $term-green;
+    text-decoration: none;
   }
 }
 
 .cert-modal-image {
+  display: block;
   max-width: min(80vw, 700px);
   max-height: 70vh;
   object-fit: contain;
-  filter: none;
   border: 1px solid $term-border;
   border-radius: 6px;
   background: #000;
 }
 
-// =====================
-// MATRIX RAIN CANVAS
-// =====================
-
-.matrix-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 998;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-
-  &.active {
-    opacity: 1;
-  }
-}
-
-// =====================
-// REDUCED MOTION
-// =====================
-
-@media (prefers-reduced-motion: reduce) {
-  .cursor,
-  .cursor-final {
-    animation: none;
-  }
-
-  * {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-  }
-}
-
-// =====================
-// RESPONSIVE - MOBILE
-// =====================
-
-@include mediaMd {
-  body {
-    padding: 0.6rem;
-  }
-
-  .terminal {
-    padding: 1.25rem 1rem 1rem;
-    gap: 1.4rem;
-  }
-
-  .titlebar-size {
-    display: none;
-  }
-
-  .terminal-content {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
-  }
-
-  // Image first on mobile
-  .terminal-right {
-    order: -1;
-    align-items: center;
-  }
-
-  .terminal-left {
-    text-align: left;
-  }
-
-  .profile-image-container {
-    max-width: 200px;
-  }
-
-  .certifications {
-    align-items: center;
-  }
-
-  .shell-output {
-    max-height: 32vh;
-  }
-
-  .status-bar {
-    font-size: 0.65rem;
-    padding: 0.3rem 0.6rem;
-
-    .status-uptime {
-      display: none;
-    }
-  }
+@keyframes cert-glitch {
+  0%, 100% { filter: $cert-filter; }
+  10% { filter: grayscale(100%) sepia(100%) hue-rotate(112deg) saturate(2.6) brightness(1.15) contrast(1.4); }
+  18% { filter: $cert-filter; }
+  34% { filter: grayscale(100%) sepia(100%) hue-rotate(68deg) saturate(1.2) brightness(0.75) contrast(1.1); }
+  42% { filter: $cert-filter; }
+  57% { filter: grayscale(100%) sepia(100%) hue-rotate(104deg) saturate(3) brightness(1.25) contrast(1.5); }
+  64% { filter: $cert-filter; }
+  81% { filter: grayscale(100%) sepia(100%) hue-rotate(76deg) saturate(2) brightness(0.8) contrast(1.3); }
+  88% { filter: $cert-filter; }
 }
 
 @include mediaSm {
-  .terminal {
-    padding: 1rem 0.75rem 0.75rem;
+  body {
+    padding: 1.25rem 1rem 2rem;
   }
 
-  .terminal-title {
-    font-size: 0.9rem;
-  }
-
-  .terminal-prompt,
-  .terminal-command {
-    font-size: 0.78rem;
-  }
-
-  .skill-tag,
-  .terminal-text {
-    font-size: 0.8rem;
-  }
-
-  .profile-image-container {
-    max-width: 170px;
-  }
-
-  .cert-badges img {
-    width: 45px;
-    height: 45px;
+  .dim {
+    display: block;
+    margin-left: 1rem;
   }
 }
